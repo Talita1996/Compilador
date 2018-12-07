@@ -8,6 +8,14 @@ public class Token {
     public Token (byte kind, String spelling) {
         this.kind = kind;
         this.spelling = spelling;
+        //Caso venha um token do tipo ID é necessário validar 
+        //esse kind pois palavras reservadas também virão com esse kind.
+        if (kind == ID)
+            for (int k = TRUE; k <= OR; k++)
+                if (spelling.equals(spellings[k])) {
+                    this.kind = k;
+                    break;
+                }
     }
     
     public final static byte
