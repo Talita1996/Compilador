@@ -20,7 +20,11 @@ public class Token {
 				this.kind = k;
 		}
 	}
-
+	
+	/**
+	 * Conjuto de tipos de token Mini-Triangle
+	 */
+	
 	public static final byte IDENTIFIER = 0, INT_LITERAL = 1, FLOAT_LITERAL = 2, AND = 3, OR = 4, PROGRAM = 5, END = 6,
 			IF = 8, ELSE = 7, THEN = 8, DO = 9, WHILE = 10, VAR = 11, ARRAY = 12, INTEGER = 13, REAL = 14, BOOLEAN = 15,
 			OF = 16, TRUE = 17, FALSE = 18, BEGIN = 19, EOT = 20, COLON = 21, SEMICOLON = 22, ASSIGENMENT = 23,
@@ -33,6 +37,15 @@ public class Token {
 			"begin", "eot", ":", ";", ":=", "+", "-", "*", "/", "<", ">", "<=", ">=", "<>", ".", "..", "[", "]", "(",
 			")", "=", "," };
 
+	
+	/**
+	 * 
+	 * Recebe o código do token encontrado e retorna descrição textual correspondente
+	 * 
+	 * @param index
+	 * @return String com decrição do correspondente ao tipo do token.
+	 */
+	
 	public static String getSpellings(int index) {
 		if ((index < spellings.length) && (index >= 0))
 			return (spellings[index]);

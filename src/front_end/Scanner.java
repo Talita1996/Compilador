@@ -2,6 +2,25 @@ package front_end;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ *  Esta classe implementa métodos de analise léxica para reconhecer tokens da linguagem 
+ *  de programação mini-triangle. O referencial teórico empregado pode ser encontrado no 
+ *  livro Programming Language Processors in Java, por DAVID A WATT e DERYCK F BROWN, e
+ *  nas notas de aula do professor Dr. Marcus Vinícius Midena Ramos da Universidade Federal
+ *  do Vale do Sâo Francisco, disponivel em <http://www.marcusramos.com.br/univasf/c-2018-2/index.html>.
+ *  
+ *  Documentações auxiliares, a gramatica mini-triangle e a gramática léxica podem ser acessados 
+ *  em <> 
+ * 
+ * @author  Daniel Lucas Nunes de Alencar Alves 
+ * @author  Thalita 
+ * @author  Jessica
+ * 
+ * 
+ *
+ */
+
 public class Scanner {
 
 	private char currentChar;
@@ -238,6 +257,10 @@ public class Scanner {
 
 	}
 
+	/**
+	 * @return  próximo token mini-triangle do código fonte.
+	 */
+	
 	public Token scan() {
 		while (currentChar == '!' || currentChar == ' ' || currentChar == '\n')
 			scanSeparator();
