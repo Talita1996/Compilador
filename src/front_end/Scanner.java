@@ -4,36 +4,61 @@ import java.util.ArrayList;
 
 /**
  * 
- *  Esta classe implementa métodos de analise léxica para reconhecer tokens da linguagem 
- *  de programação mini-triangle. O referencial teórico empregado pode ser encontrado no 
- *  livro Programming Language Processors in Java, por DAVID A WATT e DERYCK F BROWN, e
- *  nas notas de aula do professor Dr. Marcus Vinícius Midena Ramos da Universidade Federal
- *  do Vale do Sâo Francisco, disponivel em <http://www.marcusramos.com.br/univasf/c-2018-2/index.html>.
- *  
- *  Documentações auxiliares, a gramatica mini-triangle e a gramática léxica podem ser acessados 
- *  em <> 
+ * Esta classe implementa métodos de analise léxica para reconhecer tokens da
+ * linguagem de programação mini-triangle. O referencial teórico empregado pode
+ * ser encontrado no livro Programming Language Processors in Java, por DAVID A
+ * WATT e DERYCK F BROWN, e nas notas de aula do professor Dr. Marcus Vinícius
+ * Midena Ramos da Universidade Federal do Vale do Sâo Francisco, disponivel em
+ * <http://www.marcusramos.com.br/univasf/c-2018-2/index.html>.
  * 
- * @author  Daniel Lucas Nunes de Alencar Alves 
- * @author  Thalita 
- * @author  Jessica
+ * Documentações auxiliares, a gramatica mini-triangle e a gramática léxica
+ * podem ser acessados em <>
  * 
+ * @author Daniel Lucas Nunes de Alencar Alves
+ * @author Thalita
+ * @author Jessica
  * 
- *
  */
 
 public class Scanner {
 
 	private char currentChar;
 	private byte currentKind;
-	private StringBuffer currentSpelling;
+	private StringBuffer currentSpelling = new StringBuffer();
 
-	private ArrayList<Character> codigoFonte;
+	private ArrayList<Character> codigoFonte = new ArrayList<>();
 	private Integer posicaoDeLeitura;
+
+	public Scanner(String codigoFonte) {
+		/**
+		 * Converte o codigo fonte String -> ArrayList<Character> e inicializa o
+		 * currentChar
+		 */
+		if (codigoFonte != null && !codigoFonte.isEmpty()) {
+			for (char ch : codigoFonte.toCharArray())
+				this.codigoFonte.add(ch);
+			this.codigoFonte.add((char) '\000');
+		}
+
+		this.posicaoDeLeitura = 0;
+		this.currentChar = this.codigoFonte.get(0);
+		System.out.println(this.codigoFonte);
+	}
+
+	public ArrayList<Character> getCodigoFonte() {
+		return codigoFonte;
+	}
+
+	public void setCodigoFonte(ArrayList<Character> codigoFonte) {
+		this.codigoFonte = codigoFonte;
+	}
 
 	private void take(char expectedChar) {
 		if (currentChar == expectedChar) {
 			currentSpelling.append(currentChar);
+			posicaoDeLeitura++;
 			currentChar = codigoFonte.get(posicaoDeLeitura);
+
 		} else {
 		}
 		// report a lexical error
@@ -41,101 +66,48 @@ public class Scanner {
 
 	private void takeIt() {
 		currentSpelling.append(currentChar);
+		posicaoDeLeitura++;
 		currentChar = codigoFonte.get(posicaoDeLeitura);
 	}
 
 	private boolean isDigit(char c) {
-		switch (currentChar) {
-		case '0':
-		case '1':
-		case '2':
-		case '3':
-		case '4':
-		case '5':
-		case '6':
-		case '7':
-		case '8':
-		case '9':
-			return true;
-		default:
-			return false;
-		}
+		/**
+		 * Verifica se o caractere é um digito, de acordo com o respectivo codigo decimal na tabela ASCII 
+		 */
+		boolean ehUmDigito = ((int) c >= 48 && (int) c <= 57);
+		return ehUmDigito;
 	}
 
 	private boolean isLetter(char c) {
-		switch (currentChar) {
-		case 'a':
-		case 'b':
-		case 'c':
-		case 'd':
-		case 'e':
-		case 'f':
-		case 'g':
-		case 'h':
-		case 'i':
-		case 'j':
-		case 'k':
-		case 'l':
-		case 'm':
-		case 'n':
-		case 'o':
-		case 'p':
-		case 'q':
-		case 'r':
-		case 's':
-		case 't':
-		case 'u':
-		case 'v':
-		case 'x':
-		case 'y':
-		case 'z':
-
-		case 'A':
-		case 'B':
-		case 'C':
-		case 'D':
-		case 'E':
-		case 'F':
-		case 'G':
-		case 'H':
-		case 'I':
-		case 'J':
-		case 'K':
-		case 'L':
-		case 'M':
-		case 'N':
-		case 'O':
-		case 'P':
-		case 'Q':
-		case 'R':
-		case 'S':
-		case 'T':
-		case 'U':
-		case 'V':
-		case 'X':
-		case 'Y':
-		case 'Z':
-			return true;
-		default:
-			return false;
-		}
+		
+		/**
+		 * Verifica se o caractere é uma letra, de acordo com o respectivo codigo decimal na tabela ASCII
+		 */
+		
+		boolean ehLetraMinuscula = ((int) c >= 97 && (int)c <= 122);
+		boolean ehLetraMaiscula =  ((int) c >= 65 && (int) c <= 90);
+		
+		return ehLetraMaiscula || ehLetraMinuscula;
 	}
 
 	private boolean isGraphic(char c) {
-		return ((int) currentChar >= 32) && (((int) currentChar) <= 126);
-		/* 32 a 126 sao os printable characters da ASCII */
+		/**
+		 * Na tabela ASCII, os caracteres imprimiveis (ou seja, visiveis na tela) tem codigo decimal entre 32 e 126
+		 */
+		return ((int) c >= 32) && (((int) c) <= 126);
 	}
 
 	private byte scanToken() {
 
+
 		if (isLetter(currentChar)) {
 			takeIt();
-			while (isLetter(currentChar) || isDigit(currentChar))
+			while (isLetter(currentChar) || isDigit(currentChar)) {
 				takeIt();
+			}
 			return Token.IDENTIFIER;
 
 		} else if (isDigit(currentChar)) {
-
 			takeIt();
 			while (isDigit(currentChar))
 				takeIt();
@@ -152,7 +124,6 @@ public class Scanner {
 		} else {
 
 			switch (currentChar) {
-
 			case '.':
 				takeIt();
 				if (currentChar == '.') {
@@ -247,23 +218,39 @@ public class Scanner {
 			default:
 				takeIt();
 				byte a = 'a';
-				return  a;
-				//Lancar exception erro sintaxe
+				return a;
+			// Lancar exception erro sintaxe
 			}
 		}
 	}
 
 	private void scanSeparator() {
-
+		switch (currentChar) {
+		case '!':
+			while (isGraphic(currentChar))
+				takeIt();
+			take('\n');
+			break;
+		case ' ':
+		case '\r':
+			takeIt();
+			break;
+		case '\n':
+			takeIt();
+			break;
+		}
 	}
 
 	/**
-	 * @return  próximo token mini-triangle do código fonte.
+	 * @return próximo token mini-triangle do código fonte.
 	 */
-	
+
 	public Token scan() {
-		while (currentChar == '!' || currentChar == ' ' || currentChar == '\n')
+
+		while (currentChar == '!' || currentChar == ' ' || currentChar == '\n' || currentChar == '\r') {
 			scanSeparator();
+		}
+
 		currentSpelling = new StringBuffer("");
 		currentKind = scanToken();
 		return new Token(currentKind, currentSpelling.toString());
