@@ -37,7 +37,6 @@ public class Token {
 			"begin", "eot", ":", ";", ":=", "+", "-", "*", "/", "<", ">", "<=", ">=", "<>", ".", "..", "[", "]", "(",
 			")", "=", "," };
 
-	
 	/**
 	 * 
 	 * Recebe o código do token encontrado e retorna descrição textual correspondente

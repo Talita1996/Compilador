@@ -60,8 +60,8 @@ public class Scanner {
 			currentChar = codigoFonte.get(posicaoDeLeitura);
 
 		} else {
+			
 		}
-		// report a lexical error
 	}
 
 	private void takeIt() {
@@ -206,7 +206,7 @@ public class Scanner {
 
 			case ']':
 				takeIt();
-				return Token.RIGHT_PARENTHESIS;
+				return Token.RIGHT_BRACKET;
 
 			case ',':
 				takeIt();
@@ -217,9 +217,7 @@ public class Scanner {
 
 			default:
 				takeIt();
-				byte a = 'a';
-				return a;
-			// Lancar exception erro sintaxe
+				return 99;
 			}
 		}
 	}
