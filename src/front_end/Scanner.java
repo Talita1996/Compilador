@@ -1,7 +1,5 @@
 package front_end;
 
-import java.util.ArrayList;
-
 /**
  * 
  * Esta classe implementa métodos de analise léxica para reconhecer tokens da
@@ -26,30 +24,27 @@ public class Scanner {
 	private byte currentKind;
 	private StringBuffer currentSpelling = new StringBuffer();
 
-	private ArrayList<Character> codigoFonte = new ArrayList<>();
+	private String codigoFonte;
 	private Integer posicaoDeLeitura;
 
+	/**
+	 * Recebe o código fonte no compilador e inicializa a leitura do mesmo.
+	 */
 	public Scanner(String codigoFonte) {
-		/**
-		 * Converte o codigo fonte String -> ArrayList<Character> e inicializa o
-		 * currentChar
-		 */
 		if (codigoFonte != null && !codigoFonte.isEmpty()) {
-			for (char ch : codigoFonte.toCharArray())
-				this.codigoFonte.add(ch);
-			this.codigoFonte.add((char) '\000');
+			StringBuilder aux = new StringBuilder();
+			this.codigoFonte = aux.append(codigoFonte).append((char) '\000').toString();
+			this.posicaoDeLeitura = 0;
+			this.currentChar = this.codigoFonte.charAt(0);
 		}
 
-		this.posicaoDeLeitura = 0;
-		this.currentChar = this.codigoFonte.get(0);
-		System.out.println(this.codigoFonte);
 	}
 
-	public ArrayList<Character> getCodigoFonte() {
+	public String getCodigoFonte() {
 		return codigoFonte;
 	}
 
-	public void setCodigoFonte(ArrayList<Character> codigoFonte) {
+	public void setCodigoFonte(String codigoFonte) {
 		this.codigoFonte = codigoFonte;
 	}
 
@@ -57,17 +52,17 @@ public class Scanner {
 		if (currentChar == expectedChar) {
 			currentSpelling.append(currentChar);
 			posicaoDeLeitura++;
-			currentChar = codigoFonte.get(posicaoDeLeitura);
+			currentChar = codigoFonte.charAt(posicaoDeLeitura);
 
 		} else {
-			
+			// Falta lançar um erro lexico aqui
 		}
 	}
 
 	private void takeIt() {
 		currentSpelling.append(currentChar);
 		posicaoDeLeitura++;
-		currentChar = codigoFonte.get(posicaoDeLeitura);
+		currentChar = codigoFonte.charAt(posicaoDeLeitura);
 	}
 
 	private boolean isDigit(char c) {
@@ -112,7 +107,7 @@ public class Scanner {
 			while (isDigit(currentChar))
 				takeIt();
 			if (currentChar == '.') {
-				if (codigoFonte.get(posicaoDeLeitura + 1) == '.')
+				if (codigoFonte.charAt(posicaoDeLeitura + 1) == '.')
 					return Token.INT_LITERAL;
 				takeIt();
 				while (isDigit(currentChar))

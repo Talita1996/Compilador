@@ -11,7 +11,7 @@ public class Compilador {
 		Scanner scanner = new Scanner(codigofonte);
 		Token token = scanner.scan();
 
-		while (token.kind != 20) {
+		while (token.kind != Token.EOT) {
 			System.out.println("A grafia do token retornado foi " + token.spelling);
 			System.out.println("O tipo do token retornado foi " + token.kind + "\n");
 			token = scanner.scan();
