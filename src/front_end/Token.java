@@ -30,7 +30,7 @@ public class Token {
 			OF = 16, TRUE = 17, FALSE = 18, BEGIN = 19, EOT = 20, COLON = 21, SEMICOLON = 22, ASSIGENMENT = 23,
 			PLUS = 24, MINUS = 25, MULTIPLICATION = 26, DIVISION = 27, LESS = 28, MORE = 29, LESS_EQUAL = 30,
 			MORE_EQUAL = 31, DIFERENT = 32, DOT = 33, DOUBLE_DOT = 34, LEFT_BRACKET = 35, RIGHT_BRACKET = 36,
-			LEFT_PARENTHESIS = 37, RIGHT_PARENTHESIS = 38, EQUALS = 39, COMMA = 40, ERROR = 99;
+			LEFT_PARENTHESIS = 37, RIGHT_PARENTHESIS = 38, EQUALS = 39, COMMA = 40;
 
 	private final static String[] spellings = { "identifier", "int_literal", "float_literal", "and", "or", "program",
 			"if", "else", "then", "do", "while", "var", "array", "integer", "real", "boolean", "of", "true", "false",

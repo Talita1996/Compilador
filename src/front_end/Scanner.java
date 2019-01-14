@@ -1,5 +1,7 @@
 package front_end;
 
+import util.LexicalError;
+
 /**
  * 
  * Esta classe implementa métodos de analise léxica para reconhecer tokens da
@@ -37,7 +39,6 @@ public class Scanner {
 			this.posicaoDeLeitura = 0;
 			this.currentChar = this.codigoFonte.charAt(0);
 		}
-
 	}
 
 	public String getCodigoFonte() {
@@ -48,14 +49,16 @@ public class Scanner {
 		this.codigoFonte = codigoFonte;
 	}
 
-	private void take(char expectedChar) {
+	private void take(char expectedChar) throws LexicalError {
 		if (currentChar == expectedChar) {
 			currentSpelling.append(currentChar);
 			posicaoDeLeitura++;
 			currentChar = codigoFonte.charAt(posicaoDeLeitura);
 
 		} else {
-			// Falta lançar um erro lexico aqui
+			throw new LexicalError("O caractere \"" + expectedChar + "\" (cod. ASCCI: " + (int) currentChar
+					+ ")  era o esperado mas \"" + currentChar + "\" (cod. ASCCI: " + (int) currentChar
+					+ ") foi recebido");
 		}
 	}
 
@@ -67,33 +70,35 @@ public class Scanner {
 
 	private boolean isDigit(char c) {
 		/**
-		 * Verifica se o caractere é um digito, de acordo com o respectivo codigo decimal na tabela ASCII 
+		 * Verifica se o caractere é um digito, de acordo com o respectivo codigo
+		 * decimal na tabela ASCII
 		 */
 		boolean ehUmDigito = ((int) c >= 48 && (int) c <= 57);
 		return ehUmDigito;
 	}
 
 	private boolean isLetter(char c) {
-		
+
 		/**
-		 * Verifica se o caractere é uma letra, de acordo com o respectivo codigo decimal na tabela ASCII
+		 * Verifica se o caractere é uma letra, de acordo com o respectivo codigo
+		 * decimal na tabela ASCII
 		 */
-		
-		boolean ehLetraMinuscula = ((int) c >= 97 && (int)c <= 122);
-		boolean ehLetraMaiscula =  ((int) c >= 65 && (int) c <= 90);
-		
+
+		boolean ehLetraMinuscula = ((int) c >= 97 && (int) c <= 122);
+		boolean ehLetraMaiscula = ((int) c >= 65 && (int) c <= 90);
+
 		return ehLetraMaiscula || ehLetraMinuscula;
 	}
 
 	private boolean isGraphic(char c) {
 		/**
-		 * Na tabela ASCII, os caracteres imprimiveis (ou seja, visiveis na tela) tem codigo decimal entre 32 e 126
+		 * Na tabela ASCII, os caracteres imprimiveis (ou seja, visiveis na tela) tem
+		 * codigo decimal entre 32 e 126
 		 */
 		return ((int) c >= 32) && (((int) c) <= 126);
 	}
 
-	private byte scanToken() {
-
+	private byte scanToken() throws LexicalError {
 
 		if (isLetter(currentChar)) {
 			takeIt();
@@ -211,13 +216,13 @@ public class Scanner {
 				return Token.EOT;
 
 			default:
-				takeIt();
-				return 99;
+				throw new LexicalError("O caractere \"" + currentChar + "\" (cod. ASCCI: " + (int) currentChar
+						+ ") é inválido nesta linguagem");
 			}
 		}
 	}
 
-	private void scanSeparator() {
+	private void scanSeparator() throws LexicalError {
 		switch (currentChar) {
 		case '!':
 			while (isGraphic(currentChar))
@@ -236,9 +241,10 @@ public class Scanner {
 
 	/**
 	 * @return próximo token mini-triangle do código fonte.
+	 * @throws LexicalError
 	 */
 
-	public Token scan() {
+	public Token scan() throws LexicalError {
 
 		while (currentChar == '!' || currentChar == ' ' || currentChar == '\n' || currentChar == '\r') {
 			scanSeparator();
