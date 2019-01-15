@@ -1,8 +1,8 @@
 package view;
 
+import compilation_error.LexicalError;
 import front_end.Scanner;
 import front_end.Token;
-import util.LexicalError;
 
 public class Compilador {
 

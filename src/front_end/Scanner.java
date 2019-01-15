@@ -1,6 +1,6 @@
 package front_end;
 
-import util.LexicalError;
+import compilation_error.LexicalError;
 
 /**
  * 
