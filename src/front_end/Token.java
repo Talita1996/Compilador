@@ -20,31 +20,32 @@ public class Token {
 				this.kind = k;
 		}
 	}
-	
+
 	/**
 	 * Conjuto de tipos de token Mini-Triangle
 	 */
-	
+
 	public static final byte IDENTIFIER = 0, INT_LITERAL = 1, FLOAT_LITERAL = 2, AND = 3, OR = 4, PROGRAM = 5, END = 6,
-			IF = 8, ELSE = 7, THEN = 8, DO = 9, WHILE = 10, VAR = 11, ARRAY = 12, INTEGER = 13, REAL = 14, BOOLEAN = 15,
-			OF = 16, TRUE = 17, FALSE = 18, BEGIN = 19, EOT = 20, COLON = 21, SEMICOLON = 22, ASSIGENMENT = 23,
-			PLUS = 24, MINUS = 25, MULTIPLICATION = 26, DIVISION = 27, LESS = 28, MORE = 29, LESS_EQUAL = 30,
-			MORE_EQUAL = 31, DIFERENT = 32, DOT = 33, DOUBLE_DOT = 34, LEFT_BRACKET = 35, RIGHT_BRACKET = 36,
-			LEFT_PARENTHESIS = 37, RIGHT_PARENTHESIS = 38, EQUALS = 39, COMMA = 40;
+			IF = 7, ELSE = 8, THEN = 9, DO = 10, WHILE = 11, VAR = 12, ARRAY = 13, INTEGER = 14, REAL = 15, BOOLEAN = 16,
+			OF = 17, TRUE = 18, FALSE = 19, BEGIN = 20, EOT = 21, COLON = 22, SEMICOLON = 23, ASSIGENMENT = 24,
+			PLUS = 25, MINUS = 26, MULTIPLICATION = 27, DIVISION = 28, LESS = 29, MORE = 30, LESS_EQUAL = 31,
+			MORE_EQUAL = 32, DIFERENT = 33, DOT = 34, DOUBLE_DOT = 35, LEFT_BRACKET = 36, RIGHT_BRACKET = 37,
+			LEFT_PARENTHESIS = 38, RIGHT_PARENTHESIS = 39, EQUALS = 40, COMMA = 41;
 
 	private final static String[] spellings = { "identifier", "int_literal", "float_literal", "and", "or", "program",
-			"if", "else", "then", "do", "while", "var", "array", "integer", "real", "boolean", "of", "true", "false",
-			"begin", "eot", ":", ";", ":=", "+", "-", "*", "/", "<", ">", "<=", ">=", "<>", ".", "..", "[", "]", "(",
-			")", "=", "," };
+			"end", "if", "else", "then", "do", "while", "var", "array", "integer", "real", "boolean", "of", "true",
+			"false", "begin", "eot", ":", ";", ":=", "+", "-", "*", "/", "<", ">", "<=", ">=", "<>", ".", "..", "[",
+			"]", "(", ")", "=", "," };
 
 	/**
 	 * 
-	 * Recebe o código do token encontrado e retorna descrição textual correspondente
+	 * Recebe o código do token encontrado e retorna descrição textual
+	 * correspondente
 	 * 
 	 * @param index
 	 * @return String com decrição do correspondente ao tipo do token.
 	 */
-	
+
 	public static String getSpellings(int index) {
 		if ((index < spellings.length) && (index >= 0))
 			return (spellings[index]);

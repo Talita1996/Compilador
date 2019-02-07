@@ -5,31 +5,42 @@ import compilation_error.SintaxeError;
 
 public class Parser {
 
+	/***************************** VARIAVEIS *****************************/
 	private Token currentToken;
 	private Scanner scanner;
 
+	/**************************** CONSTRUTOR *****************************/
 	public Parser(String codigoFonte) {
 		this.scanner = new Scanner(codigoFonte);
 	}
 
-	/*************************************************************************/
-
+	/************************ METODOS AUXILIARES ************************/
+	/**
+	 * Verifica se o token corrente faz com que o codigo fonte esteja de acordo com
+	 * a gramática da linguagem.
+	 * 
+	 * @param expectedKind
+	 * @throws LexicalError
+	 */
 	private void accept(byte expectedKind) throws LexicalError {
-
 		if (currentToken.kind == expectedKind) {
 			currentToken = scanner.scan();
 		} else {
-			currentToken = scanner.scan();
+			throw new LexicalError("Erro! O compilador esperava encontrar: \"" + Token.getSpellings(expectedKind)
+					+ "\" , mas encontrou: \"" + currentToken.spelling + "\"",scanner.getLinha(),scanner.getColuna());
 		}
 	}
 
+	/**
+	 * Consome um token do codigo fonte.
+	 * 
+	 * @throws LexicalError
+	 */
 	private void acceptIt() throws LexicalError {
 		currentToken = scanner.scan();
 	}
 
-	/**
-	 * @throws SintaxeError ***********************************************************************/
-
+	/************************ METODOS DE ANALISE SINTATICA ************************/
 	private void parseProgram() throws LexicalError, SintaxeError {
 
 		accept(Token.PROGRAM);
@@ -75,7 +86,7 @@ public class Parser {
 			break;
 
 		default:
-			throw new SintaxeError("Tipo inválido");
+			throw new SintaxeError("Tipo inválido",scanner.getLinha(),scanner.getColuna());
 		}
 	}
 
@@ -103,7 +114,7 @@ public class Parser {
 			acceptIt();
 			break;
 		default:
-			throw new SintaxeError("Literal inválido");
+			throw new SintaxeError("Literal inválido",scanner.getLinha(),scanner.getColuna());
 		}
 	}
 
@@ -137,7 +148,7 @@ public class Parser {
 			break;
 
 		default:
-			throw new SintaxeError("Comando inválido");
+			throw new SintaxeError("Comando inválido",scanner.getLinha(),scanner.getColuna());
 		}
 	}
 
@@ -226,17 +237,22 @@ public class Parser {
 			break;
 
 		default:
-			throw new SintaxeError("Fator invalido");
+			throw new SintaxeError("Fator invalido",scanner.getLinha(),scanner.getColuna());
 		}
 	}
 
+	/************************ METODO PRINCIPAL ************************/
+	/**
+	 * Verifica se as sentenças do codigo fonte estao de acordo com a gramatica da linguagem
+	 * @throws LexicalError
+	 * @throws SintaxeError
+	 */
 	public void parse() throws LexicalError, SintaxeError {
 
 		currentToken = scanner.scan();
 		parseProgram();
 
-		if (currentToken.kind != Token.EOT) {
-			throw new SintaxeError("Fim de arquivo, inválido");
-		}
+		if (currentToken.kind != Token.EOT)
+			throw new SintaxeError("Fim de arquivo, inválido",scanner.getLinha(),scanner.getColuna());
 	}
 }

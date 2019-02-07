@@ -1,6 +1,8 @@
 package view;
 
 import compilation_error.LexicalError;
+import compilation_error.SintaxeError;
+import front_end.Parser;
 import front_end.Scanner;
 import front_end.Token;
 
@@ -9,10 +11,12 @@ public class Compilador {
 	public static void main(String[] args) {
 		String codigofonte = "  "
 				+ "  while abacaxi then bolinha. 1.33 .33 1. ..2 ..33 1..2 1.. ola !Isso eh um comentario"
-				+ "\nhey man how are you do for while: ; ( ) [] ) ] ) [ ] ( )  @ * 234 21 2 0 \r / <> <= >= ::= := & ¨ 1.21.74..2.5... ";
+				+ "\nhey man how are you do for while: ; ( ) [] ) ] ) [ ] ( ) * 234 21 2 0 \r / <> <= >= ::= := 1.21.74..2.5...".concat(Character.toString('\000'));
+		codigofonte = "program bolinhaCao; \n begin \n perolaCao := 23; \n gato := true; \n end.".concat(Character.toString('\000'));
 		Scanner scanner = new Scanner(codigofonte);
 
 		Token token;
+		
 		try {
 			token = scanner.scan();
 			while (token.kind != Token.EOT) {
@@ -23,5 +27,21 @@ public class Compilador {
 		} catch (LexicalError e) {
 			System.out.println("Erro léxico:\n" + e.getMessage());
 		}
+		
+		
+		System.out.println("\n\n\nIniciando analise sintatica");
+		codigofonte = "program bolinhaCao; \n begin \n perolaCao :=a 23; \n gato := true; \n end.";
+
+		Parser parser = new Parser(codigofonte);
+		try {
+			parser.parse();
+		} catch (LexicalError e) {
+			System.out.println("Erro lexico");
+			e.printStackTrace();
+		} catch (SintaxeError e) {
+			System.out.println("Erro sintaxe");
+			e.printStackTrace();
+		}
+		
 	}
 }

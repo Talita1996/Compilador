@@ -16,21 +16,26 @@ import compilation_error.LexicalError;
  * 
  * @author Daniel Lucas Nunes de Alencar Alves
  * @author Thalita
- * @author Jessica
  * 
  */
 
 public class Scanner {
 
+	/***************************** VARIAVEIS *****************************/
 	private char currentChar;
 	private byte currentKind;
+
 	private StringBuffer currentSpelling = new StringBuffer();
-
 	private String codigoFonte;
-	private Integer posicaoDeLeitura;
 
+	private Integer posicaoDeLeitura;
+	private int linha = 1;
+	private int coluna = 1;
+
+	/**************************** CONSTRUTOR *****************************/
 	/**
-	 * Recebe o código fonte no compilador e inicializa a leitura do mesmo.
+	 * Recebe o código fonte e concatena o caractere de fim de arquivo (para o caso
+	 * de a fonte original nao o ter feito)
 	 */
 	public Scanner(String codigoFonte) {
 		if (codigoFonte != null && !codigoFonte.isEmpty()) {
@@ -41,30 +46,25 @@ public class Scanner {
 		}
 	}
 
-	public String getCodigoFonte() {
-		return codigoFonte;
-	}
-
-	public void setCodigoFonte(String codigoFonte) {
-		this.codigoFonte = codigoFonte;
-	}
-
+	/************************ METODOS AUXILIARES ************************/
 	private void take(char expectedChar) throws LexicalError {
 		if (currentChar == expectedChar) {
 			currentSpelling.append(currentChar);
 			posicaoDeLeitura++;
+			coluna++;
 			currentChar = codigoFonte.charAt(posicaoDeLeitura);
 
 		} else {
 			throw new LexicalError("O caractere \"" + expectedChar + "\" (cod. ASCCI: " + (int) currentChar
 					+ ")  era o esperado mas \"" + currentChar + "\" (cod. ASCCI: " + (int) currentChar
-					+ ") foi recebido");
+					+ ") foi recebido", linha, coluna);
 		}
 	}
 
 	private void takeIt() {
 		currentSpelling.append(currentChar);
 		posicaoDeLeitura++;
+		coluna++;
 		currentChar = codigoFonte.charAt(posicaoDeLeitura);
 	}
 
@@ -98,6 +98,19 @@ public class Scanner {
 		return ((int) c >= 32) && (((int) c) <= 126);
 	}
 
+	public String getCodigoFonte() {
+		return codigoFonte;
+	}
+
+	public int getLinha() {
+		return linha;
+	}
+
+	public int getColuna() {
+		return coluna - 1;
+	}
+
+	/************************ METODOS DE ANALISE SINTATICA ************************/
 	private byte scanToken() throws LexicalError {
 
 		if (isLetter(currentChar)) {
@@ -217,7 +230,7 @@ public class Scanner {
 
 			default:
 				throw new LexicalError("O caractere \"" + currentChar + "\" (cod. ASCCI: " + (int) currentChar
-						+ ") é inválido nesta linguagem");
+						+ ") é inválido nesta linguagem", linha, coluna);
 			}
 		}
 	}
@@ -227,6 +240,8 @@ public class Scanner {
 		case '!':
 			while (isGraphic(currentChar))
 				takeIt();
+			linha++;
+			coluna = 1;
 			take('\n');
 			break;
 		case ' ':
@@ -234,16 +249,18 @@ public class Scanner {
 			takeIt();
 			break;
 		case '\n':
+			linha++;
+			coluna = 1;
 			takeIt();
 			break;
 		}
 	}
 
+	/************************ METODO PRINCIPAL ************************/
 	/**
 	 * @return próximo token mini-triangle do código fonte.
 	 * @throws LexicalError
 	 */
-
 	public Token scan() throws LexicalError {
 
 		while (currentChar == '!' || currentChar == ' ' || currentChar == '\n' || currentChar == '\r') {
