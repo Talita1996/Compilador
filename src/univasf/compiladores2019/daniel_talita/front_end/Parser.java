@@ -253,7 +253,7 @@ public class Parser {
 	 */
 	public void parse() throws LexicalError, SintaxeError {
 		currentToken = scanner.scan();
-		parseProgramasd();
+		parseProgram();
 
 		if (currentToken.kind != Token.EOT)
 			throw new SintaxeError("Fim de arquivo, inválido", scanner.getLinha(), scanner.getColuna());
