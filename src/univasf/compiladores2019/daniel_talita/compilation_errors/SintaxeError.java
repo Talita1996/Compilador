@@ -1,4 +1,4 @@
-package compilation_error;
+package univasf.compiladores2019.daniel_talita.compilation_errors;
 
 public class SintaxeError extends Exception {
 	

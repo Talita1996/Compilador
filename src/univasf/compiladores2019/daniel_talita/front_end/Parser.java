@@ -1,7 +1,7 @@
-package front_end;
+package univasf.compiladores2019.daniel_talita.front_end;
 
-import compilation_error.LexicalError;
-import compilation_error.SintaxeError;
+import univasf.compiladores2019.daniel_talita.compilation_errors.LexicalError;
+import univasf.compiladores2019.daniel_talita.compilation_errors.SintaxeError;
 
 public class Parser {
 
@@ -26,8 +26,10 @@ public class Parser {
 		if (currentToken.kind == expectedKind) {
 			currentToken = scanner.scan();
 		} else {
-			throw new LexicalError("Erro! O compilador esperava encontrar: \"" + Token.getSpellings(expectedKind)
-					+ "\" , mas encontrou: \"" + currentToken.spelling + "\"",scanner.getLinha(),scanner.getColuna());
+			throw new LexicalError(
+					"Erro! O compilador esperava encontrar: \"" + Token.getSpellings(expectedKind)
+							+ "\" , mas encontrou: \"" + currentToken.spelling + "\"",
+					scanner.getLinha(), scanner.getColuna());
 		}
 	}
 
@@ -86,7 +88,7 @@ public class Parser {
 			break;
 
 		default:
-			throw new SintaxeError("Tipo inválido",scanner.getLinha(),scanner.getColuna());
+			throw new SintaxeError("Tipo inválido", scanner.getLinha(), scanner.getColuna());
 		}
 	}
 
@@ -114,7 +116,7 @@ public class Parser {
 			acceptIt();
 			break;
 		default:
-			throw new SintaxeError("Literal inválido",scanner.getLinha(),scanner.getColuna());
+			throw new SintaxeError("Literal inválido", scanner.getLinha(), scanner.getColuna());
 		}
 	}
 
@@ -148,7 +150,7 @@ public class Parser {
 			break;
 
 		default:
-			throw new SintaxeError("Comando inválido",scanner.getLinha(),scanner.getColuna());
+			throw new SintaxeError("Comando inválido", scanner.getLinha(), scanner.getColuna());
 		}
 	}
 
@@ -188,9 +190,9 @@ public class Parser {
 			parseTermo();
 		}
 
-		while (currentToken.kind == Token.LESS || currentToken.kind == Token.LESS_EQUAL
-				|| currentToken.kind == Token.MORE || currentToken.kind == Token.MORE_EQUAL
-				|| currentToken.kind == Token.EQUALS || currentToken.kind == Token.DIFERENT) {
+		if (currentToken.kind == Token.LESS || currentToken.kind == Token.LESS_EQUAL || currentToken.kind == Token.MORE
+				|| currentToken.kind == Token.MORE_EQUAL || currentToken.kind == Token.EQUALS
+				|| currentToken.kind == Token.DIFERENT) {
 			acceptIt();
 			parseTermo();
 			while (currentToken.kind == Token.PLUS || currentToken.kind == Token.MINUS
@@ -237,13 +239,15 @@ public class Parser {
 			break;
 
 		default:
-			throw new SintaxeError("Fator invalido",scanner.getLinha(),scanner.getColuna());
+			throw new SintaxeError("Fator invalido", scanner.getLinha(), scanner.getColuna());
 		}
 	}
 
 	/************************ METODO PRINCIPAL ************************/
 	/**
-	 * Verifica se as sentenças do codigo fonte estao de acordo com a gramatica da linguagem
+	 * Verifica se as sentenças do codigo fonte estao de acordo com a gramatica da
+	 * linguagem
+	 * 
 	 * @throws LexicalError
 	 * @throws SintaxeError
 	 */
@@ -253,6 +257,6 @@ public class Parser {
 		parseProgram();
 
 		if (currentToken.kind != Token.EOT)
-			throw new SintaxeError("Fim de arquivo, inválido",scanner.getLinha(),scanner.getColuna());
+			throw new SintaxeError("Fim de arquivo, inválido", scanner.getLinha(), scanner.getColuna());
 	}
 }

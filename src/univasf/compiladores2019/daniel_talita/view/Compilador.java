@@ -1,10 +1,10 @@
-package view;
+package univasf.compiladores2019.daniel_talita.view;
 
-import compilation_error.LexicalError;
-import compilation_error.SintaxeError;
-import front_end.Parser;
-import front_end.Scanner;
-import front_end.Token;
+import univasf.compiladores2019.daniel_talita.compilation_errors.LexicalError;
+import univasf.compiladores2019.daniel_talita.compilation_errors.SintaxeError;
+import univasf.compiladores2019.daniel_talita.front_end.Parser;
+import univasf.compiladores2019.daniel_talita.front_end.Scanner;
+import univasf.compiladores2019.daniel_talita.front_end.Token;
 
 public class Compilador {
 
@@ -30,7 +30,7 @@ public class Compilador {
 		
 		
 		System.out.println("\n\n\nIniciando analise sintatica");
-		codigofonte = "program bolinhaCao; \n begin \n perolaCao :=a 23; \n gato := true; \n end.";
+		codigofonte = "program bolinhaCao; \n begin \n perolaCao := 23; \n gato := true; \n end.";
 
 		Parser parser = new Parser(codigofonte);
 		try {
@@ -43,5 +43,6 @@ public class Compilador {
 			e.printStackTrace();
 		}
 		
+		System.out.println("Analise sintatica concluida com sucesso!");
 	}
 }

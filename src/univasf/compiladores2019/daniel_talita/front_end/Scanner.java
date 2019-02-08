@@ -1,6 +1,6 @@
-package front_end;
+package univasf.compiladores2019.daniel_talita.front_end;
 
-import compilation_error.LexicalError;
+import univasf.compiladores2019.daniel_talita.compilation_errors.LexicalError;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class Scanner {
 		}
 	}
 
-	/************************ METODOS AUXILIARES ************************/
+	/************************ METODOS AUXILIARES *************************/
 	private void take(char expectedChar) throws LexicalError {
 		if (currentChar == expectedChar) {
 			currentSpelling.append(currentChar);
