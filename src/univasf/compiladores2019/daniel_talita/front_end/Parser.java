@@ -21,12 +21,13 @@ public class Parser {
 	 * 
 	 * @param expectedKind
 	 * @throws LexicalError
+	 * @throws SintaxeError
 	 */
-	private void accept(byte expectedKind) throws LexicalError {
+	private void accept(byte expectedKind) throws LexicalError, SintaxeError {
 		if (currentToken.kind == expectedKind) {
 			currentToken = scanner.scan();
 		} else {
-			throw new LexicalError(
+			throw new SintaxeError(
 					"Erro! O compilador esperava encontrar: \"" + Token.getSpellings(expectedKind)
 							+ "\" , mas encontrou: \"" + currentToken.spelling + "\"",
 					scanner.getLinha(), scanner.getColuna());
@@ -80,7 +81,7 @@ public class Parser {
 		switch (currentToken.kind) {
 		case Token.ARRAY:
 			parseTipoAgregado();
-
+			break;
 		case Token.INTEGER:
 		case Token.BOOLEAN:
 		case Token.REAL:
@@ -88,7 +89,7 @@ public class Parser {
 			break;
 
 		default:
-			throw new SintaxeError("Tipo inválido", scanner.getLinha(), scanner.getColuna());
+			throw new SintaxeError("AbstartoTipo inválido", scanner.getLinha(), scanner.getColuna());
 		}
 	}
 
@@ -116,7 +117,7 @@ public class Parser {
 			acceptIt();
 			break;
 		default:
-			throw new SintaxeError("Literal inválido", scanner.getLinha(), scanner.getColuna());
+			throw new SintaxeError("AbstratoLiteral inválido", scanner.getLinha(), scanner.getColuna());
 		}
 	}
 
@@ -150,7 +151,7 @@ public class Parser {
 			break;
 
 		default:
-			throw new SintaxeError("Comando inválido", scanner.getLinha(), scanner.getColuna());
+			throw new SintaxeError("AbstratoComando inválido", scanner.getLinha(), scanner.getColuna());
 		}
 	}
 
