@@ -2,6 +2,13 @@ package univasf.compiladores2019.daniel_talita.front_end;
 
 import univasf.compiladores2019.daniel_talita.compilation_errors.LexicalError;
 import univasf.compiladores2019.daniel_talita.compilation_errors.SintaxeError;
+import univasf.compiladores2019.daniel_talita.front_end.AST.AbstratoTipo;
+import univasf.compiladores2019.daniel_talita.front_end.AST.AbstratoComando;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeCorpo;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeDeclaracao;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeIdentificador;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodePrograma;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeTipoSimples;
 
 public class Parser {
 
@@ -43,57 +50,114 @@ public class Parser {
 		currentToken = scanner.scan();
 	}
 
-	/************************ METODOS DE ANALISE SINTATICA ************************/
-	private void parseProgram() throws LexicalError, SintaxeError {
+	/************************
+	 * METODOS DE ANALISE SINTATICA
+	 * 
+	 * @return
+	 ************************/
+	private NodePrograma parseProgram() throws LexicalError, SintaxeError {
+
+		NodePrograma nodePrograma = new NodePrograma();
 
 		accept(Token.PROGRAM);
 		accept(Token.IDENTIFIER);
 		accept(Token.SEMICOLON);
 
-		parseCorpo();
+		nodePrograma.setCorpoDoPrograma(parseCorpo());
 
 		accept(Token.DOT);
+
+		return nodePrograma;
 	}
 
-	private void parseCorpo() throws LexicalError, SintaxeError {
+	private NodeCorpo parseCorpo() throws LexicalError, SintaxeError {
+
+		NodeCorpo nodeCorpo = new NodeCorpo();
+
+		NodeDeclaracao aux, first, last;
+		first = last = null;
 
 		while (currentToken.kind == Token.VAR) {
-			parseDeclaracao();
+			aux = parseDeclaracao();
 			accept(Token.SEMICOLON);
+
+			if (first == null)
+				first = aux;
+			else
+				last.setNext(aux);
+			
+			while (aux.getNext() != null)
+				aux = aux.getNext();
+			
+			last = aux;
 		}
-		parseComandoComposto();
+
+		nodeCorpo.setDeclaracoes(first);
+
+		nodeCorpo.setComandos(parseComandoComposto());
+
+		return nodeCorpo;
 	}
 
-	private void parseDeclaracao() throws LexicalError, SintaxeError {
+	private NodeDeclaracao parseDeclaracao() throws LexicalError, SintaxeError {
 		acceptIt();
+		
+		NodeDeclaracao firstDeclaration, last = null, aux = null; 
+		firstDeclaration = new NodeDeclaracao();
+		firstDeclaration.setName(new NodeIdentificador(currentToken.spelling));
+
 		accept(Token.IDENTIFIER);
 
 		while (currentToken.kind == Token.COMMA) {
 			acceptIt();
+			if(firstDeclaration.getNext() == null) {
+				aux = new NodeDeclaracao();
+				aux.setName(new NodeIdentificador(currentToken.spelling));
+				firstDeclaration.setNext(aux);
+			}else {
+				aux = new NodeDeclaracao();
+				aux.setName(new NodeIdentificador(currentToken.spelling));
+				last.setNext(aux);
+			}
+			last = aux;
+			
 			accept(Token.IDENTIFIER);
 		}
 
 		accept(Token.COLON);
-		parseTipo();
+		firstDeclaration.setTipoDaVariavel(parseTipo());
+		aux = firstDeclaration;
+		
+		while(aux.getNext() != null) {
+			aux.setTipoDaVariavel(firstDeclaration.getTipoDaVariavel());
+			aux = aux.getNext();
+		}
+		
+		return firstDeclaration;
+
 	}
 
-	private void parseTipo() throws LexicalError, SintaxeError {
+	private AbstratoTipo parseTipo() throws LexicalError, SintaxeError {
+		AbstratoTipo tipo = null;;
+		
 		switch (currentToken.kind) {
 		case Token.ARRAY:
-			parseTipoAgregado();
+			tipo = parseTipoAgregado();
 			break;
 		case Token.INTEGER:
 		case Token.BOOLEAN:
 		case Token.REAL:
 			acceptIt();
+			tipo = new NodeTipoSimples();
 			break;
 
 		default:
-			throw new SintaxeError("AbstartoTipo inválido", scanner.getLinha(), scanner.getColuna());
+			throw new SintaxeError("Tipo inválido", scanner.getLinha(), scanner.getColuna());
 		}
+		return tipo;
 	}
 
-	private void parseTipoAgregado() throws LexicalError, SintaxeError {
+	private AbstratoTipo parseTipoAgregado() throws LexicalError, SintaxeError {
 		acceptIt();
 		accept(Token.LEFT_BRACKET);
 		parseLiteral();
@@ -101,7 +165,7 @@ public class Parser {
 		parseLiteral();
 		accept(Token.RIGHT_BRACKET);
 		accept(Token.OF);
-		parseTipo();
+		return parseTipo();
 	}
 
 	private void parseLiteral() throws LexicalError, SintaxeError {
@@ -121,7 +185,7 @@ public class Parser {
 		}
 	}
 
-	private void parseComandoComposto() throws LexicalError, SintaxeError {
+	private AbstratoComando parseComandoComposto() throws LexicalError, SintaxeError {
 		accept(Token.BEGIN);
 		while ((currentToken.kind == Token.IF) || (currentToken.kind == Token.WHILE)
 				|| (currentToken.kind == Token.BEGIN) || (currentToken.kind == Token.IDENTIFIER)) {
@@ -129,6 +193,7 @@ public class Parser {
 			accept(Token.SEMICOLON);
 		}
 		accept(Token.END);
+		return null;
 	}
 
 	private void parseComando() throws LexicalError, SintaxeError {
@@ -252,11 +317,14 @@ public class Parser {
 	 * @throws LexicalError
 	 * @throws SintaxeError
 	 */
-	public void parse() throws LexicalError, SintaxeError {
+	public NodePrograma parse() throws LexicalError, SintaxeError {
 		currentToken = scanner.scan();
-		parseProgram();
+		NodePrograma arvoreSintaxeDoPrograma = parseProgram();
 
 		if (currentToken.kind != Token.EOT)
 			throw new SintaxeError("Fim de arquivo, inválido", scanner.getLinha(), scanner.getColuna());
+
+		return arvoreSintaxeDoPrograma;
 	}
+
 }
