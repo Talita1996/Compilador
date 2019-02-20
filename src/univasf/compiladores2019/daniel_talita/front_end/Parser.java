@@ -4,10 +4,15 @@ import univasf.compiladores2019.daniel_talita.compilation_errors.LexicalError;
 import univasf.compiladores2019.daniel_talita.compilation_errors.SintaxeError;
 import univasf.compiladores2019.daniel_talita.front_end.AST.AbstratoTipo;
 import univasf.compiladores2019.daniel_talita.front_end.AST.AbstratoComando;
+import univasf.compiladores2019.daniel_talita.front_end.AST.AbstratoLiteral;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeCorpo;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeDeclaracao;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeIdentificador;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeLiteralBooleano;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeLiteralInteiro;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeLiteralFloat;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodePrograma;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeTipoAgregado;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeTipoSimples;
 
 public class Parser {
@@ -24,7 +29,7 @@ public class Parser {
 	/************************ METODOS AUXILIARES ************************/
 	/**
 	 * Verifica se o token corrente faz com que o codigo fonte esteja de acordo com
-	 * a gramática da linguagem.
+	 * a gramï¿½tica da linguagem.
 	 * 
 	 * @param expectedKind
 	 * @throws LexicalError
@@ -138,65 +143,88 @@ public class Parser {
 	}
 
 	private AbstratoTipo parseTipo() throws LexicalError, SintaxeError {
-		AbstratoTipo tipo = null;;
+		AbstratoTipo tipo = null;
 		
 		switch (currentToken.kind) {
 		case Token.ARRAY:
 			tipo = parseTipoAgregado();
 			break;
 		case Token.INTEGER:
+                    acceptIt();
+                    tipo = new NodeTipoSimples(currentToken.spelling);
+                    break;
 		case Token.BOOLEAN:
+                    acceptIt();
+                    tipo = new NodeTipoSimples(currentToken.spelling);
+                    break;
 		case Token.REAL:
-			acceptIt();
-			tipo = new NodeTipoSimples();
-			break;
+                    acceptIt();
+                    tipo = new NodeTipoSimples(currentToken.spelling);
+                    break;
 
 		default:
-			throw new SintaxeError("Tipo inválido", scanner.getLinha(), scanner.getColuna());
+			throw new SintaxeError("Tipo invï¿½lido", scanner.getLinha(), scanner.getColuna());
 		}
 		return tipo;
 	}
 
-	private AbstratoTipo parseTipoAgregado() throws LexicalError, SintaxeError {
+	private NodeTipoAgregado parseTipoAgregado() throws LexicalError, SintaxeError {
+                NodeTipoAgregado tipoAgregado = new NodeTipoAgregado();
 		acceptIt();
 		accept(Token.LEFT_BRACKET);
-		parseLiteral();
+		tipoAgregado.setLowerIndex(parseLiteral());
 		accept(Token.DOUBLE_DOT);
-		parseLiteral();
+		tipoAgregado.setHigherIndex(parseLiteral());
 		accept(Token.RIGHT_BRACKET);
 		accept(Token.OF);
-		return parseTipo();
+		tipoAgregado.setTipo(parseTipo());
+                return tipoAgregado;
 	}
 
-	private void parseLiteral() throws LexicalError, SintaxeError {
+	private AbstratoLiteral parseLiteral() throws LexicalError, SintaxeError {
+                AbstratoLiteral literal;
 		switch (currentToken.kind) {
 		case Token.INT_LITERAL:
+                        literal = new NodeLiteralInteiro(Integer.parseInt(currentToken.spelling));
 			acceptIt();
 			break;
 		case Token.FLOAT_LITERAL:
+                        literal = new NodeLiteralFloat(Double.parseDouble(currentToken.spelling));
 			acceptIt();
 			break;
 		case Token.TRUE:
 		case Token.FALSE:
+                        literal = new NodeLiteralBooleano(Boolean.parseBoolean(currentToken.spelling));
 			acceptIt();
 			break;
 		default:
-			throw new SintaxeError("AbstratoLiteral inválido", scanner.getLinha(), scanner.getColuna());
+			throw new SintaxeError("AbstratoLiteral invï¿½lido", scanner.getLinha(), scanner.getColuna());
 		}
+                return literal;
 	}
 
 	private AbstratoComando parseComandoComposto() throws LexicalError, SintaxeError {
 		accept(Token.BEGIN);
-		while ((currentToken.kind == Token.IF) || (currentToken.kind == Token.WHILE)
-				|| (currentToken.kind == Token.BEGIN) || (currentToken.kind == Token.IDENTIFIER)) {
-			parseComando();
-			accept(Token.SEMICOLON);
+                
+                AbstratoComando firstComando = null, last = null, aux = null;
+                
+		while ((currentToken.kind == Token.IF) || (currentToken.kind == Token.WHILE)|| (currentToken.kind == Token.BEGIN) || (currentToken.kind == Token.IDENTIFIER)) {
+                    aux = parseComando();
+                                    
+                    if (firstComando == null){
+                        firstComando = aux;
+                    }
+                    else {
+                        //PAREI AQUI
+                    }
+                    last = aux;
+                    accept(Token.SEMICOLON);
 		}
 		accept(Token.END);
 		return null;
 	}
 
-	private void parseComando() throws LexicalError, SintaxeError {
+	private AbstratoComando parseComando() throws LexicalError, SintaxeError {
 		switch (currentToken.kind) {
 
 		case Token.IDENTIFIER:
@@ -216,8 +244,10 @@ public class Parser {
 			break;
 
 		default:
-			throw new SintaxeError("AbstratoComando inválido", scanner.getLinha(), scanner.getColuna());
+			throw new SintaxeError("AbstratoComando invï¿½lido", scanner.getLinha(), scanner.getColuna());
 		}
+            return null;
+                
 	}
 
 	private void parseAtribuicao() throws LexicalError, SintaxeError {
@@ -311,7 +341,7 @@ public class Parser {
 
 	/************************ METODO PRINCIPAL ************************/
 	/**
-	 * Verifica se as sentenças do codigo fonte estao de acordo com a gramatica da
+	 * Verifica se as sentenï¿½as do codigo fonte estao de acordo com a gramatica da
 	 * linguagem
 	 * 
 	 * @throws LexicalError
@@ -322,7 +352,7 @@ public class Parser {
 		NodePrograma arvoreSintaxeDoPrograma = parseProgram();
 
 		if (currentToken.kind != Token.EOT)
-			throw new SintaxeError("Fim de arquivo, inválido", scanner.getLinha(), scanner.getColuna());
+			throw new SintaxeError("Fim de arquivo, invï¿½lido", scanner.getLinha(), scanner.getColuna());
 
 		return arvoreSintaxeDoPrograma;
 	}
