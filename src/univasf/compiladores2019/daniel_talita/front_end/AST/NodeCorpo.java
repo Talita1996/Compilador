@@ -3,7 +3,7 @@ package univasf.compiladores2019.daniel_talita.front_end.AST;
 public class NodeCorpo extends AST {
 	
 	private NodeDeclaracao declaracoes;
-	private AbstratoComando comandos;
+	private NodeComandoComposto comandos;
 	
 	
 	public NodeDeclaracao getDeclaracoes() {
@@ -15,7 +15,7 @@ public class NodeCorpo extends AST {
 	public AbstratoComando getComandos() {
 		return comandos;
 	}
-	public void setComandos(AbstratoComando comandos) {
+	public void setComandos(NodeComandoComposto comandos) {
 		this.comandos = comandos;
 	}
 }
