@@ -61,11 +61,12 @@ public class Compilador {
 				+ " end; \n"
 				+ " end.";
 
-		System.out.println(codigofonte);
+//		System.out.println(codigofonte);
 		
 		Parser parser = new Parser(codigofonte);
 		try {
 			parser.parse();
+			System.out.println("Analise com sucesso!");
 		} catch (LexicalError e) {
 			System.out.println("Erro lexico");
 			e.printStackTrace();

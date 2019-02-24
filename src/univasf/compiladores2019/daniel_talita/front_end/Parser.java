@@ -337,7 +337,7 @@ public class Parser {
 	}
 
 	private NodeExpressaoSimples parseExpressaoSimples() throws LexicalError, SintaxeError {
-		NodeExpressaoSimples aux,expressaoSimples = new NodeExpressaoSimples();
+		NodeExpressaoSimples aux, expressaoSimples = new NodeExpressaoSimples();
 		expressaoSimples.setTermo(parseTermo());
 		aux = expressaoSimples;
 		while (currentToken.kind == Token.PLUS || currentToken.kind == Token.MINUS || currentToken.kind == Token.OR) {
@@ -352,7 +352,7 @@ public class Parser {
 	}
 
 	private NodeTermo parseTermo() throws LexicalError, SintaxeError {
-		NodeTermo aux,termo = new NodeTermo();
+		NodeTermo aux, termo = new NodeTermo();
 		termo.setFator(parseFator());
 		aux = termo;
 		while (currentToken.kind == Token.MULTIPLICATION || currentToken.kind == Token.DIVISION
@@ -369,27 +369,49 @@ public class Parser {
 
 	private NodeFator parseFator() throws LexicalError, SintaxeError {
 
+		NodeFator fator = new NodeFator();
+
 		switch (currentToken.kind) {
 
 		case Token.IDENTIFIER:
+			NodeExpressao first, last, aux;
+			first = last = null;
+
+			fator.setId(new NodeIdentificador(currentToken.spelling));
 			acceptIt();
-			while (currentToken.kind == Token.LEFT_BRACKET) {
+
+			if (currentToken.kind == Token.LEFT_BRACKET) {
 				acceptIt();
-				parseExpressao();
+				first = last =  parseExpressao();
 				accept(Token.LEFT_BRACKET);
+				while (currentToken.kind == Token.LEFT_BRACKET) {
+					acceptIt();
+					aux = parseExpressao();
+					last.setNext(aux);
+					last = aux;
+					accept(Token.LEFT_BRACKET);
+				}
+				fator.setExpressoes(first);
 			}
 			break;
 
 		case Token.INT_LITERAL:
+			fator.setLiteral(new NodeLiteralInteiro(Integer.valueOf(currentToken.spelling)));
+			acceptIt();
+			break;
 		case Token.FLOAT_LITERAL:
+			fator.setLiteral(new NodeLiteralFloat(Double.valueOf(currentToken.spelling)));
+			acceptIt();
+			break;
 		case Token.TRUE:
 		case Token.FALSE:
+			fator.setLiteral(new NodeLiteralBooleano(Boolean.valueOf(currentToken.spelling)));
 			acceptIt();
 			break;
 
 		case Token.LEFT_PARENTHESIS:
 			acceptIt();
-			parseExpressao();
+			fator.setExpressoes(parseExpressao());
 			accept(Token.RIGHT_PARENTHESIS);
 			break;
 

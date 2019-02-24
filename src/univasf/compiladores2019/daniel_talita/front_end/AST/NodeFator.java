@@ -3,7 +3,7 @@ package univasf.compiladores2019.daniel_talita.front_end.AST;
 public class NodeFator {
 	
 	private NodeIdentificador id;
-	private NodeExpressao expressao;
+	private NodeExpressao expressoes;
 	private AbstratoLiteral literal;
 	
 	public NodeIdentificador getId() {
@@ -12,19 +12,16 @@ public class NodeFator {
 	public void setId(NodeIdentificador id) {
 		this.id = id;
 	}
-	public NodeExpressao getExpressao() {
-		return expressao;
-	}
-	public void setExpressao(NodeExpressao expressao) {
-		this.expressao = expressao;
-	}
 	public AbstratoLiteral getLiteral() {
 		return literal;
 	}
 	public void setLiteral(AbstratoLiteral literal) {
 		this.literal = literal;
 	}
-	
-	
-
+	public NodeExpressao getExpressoes() {
+		return expressoes;
+	}
+	public void setExpressoes(NodeExpressao expressoes) {
+		this.expressoes = expressoes;
+	}
 }
