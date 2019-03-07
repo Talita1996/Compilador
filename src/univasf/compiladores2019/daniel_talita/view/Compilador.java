@@ -38,7 +38,7 @@ public class Compilador {
 				token = scanner.scan();
 			}
 		} catch (LexicalError e) {
-			System.out.println("Erro léxico:\n" + e.getMessage());
+			System.out.println("Erro lï¿½xico:\n" + e.getMessage());
 		}
 		
 		

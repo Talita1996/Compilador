@@ -17,6 +17,7 @@ public class NodeTipoSimples extends AbstratoTipo {
     public void setNome(String nome) {
         this.nome = nome;
     }
+        @Override
     public void visit (Visitor v){
         v.visitNodeTipoSimples(this);
     }

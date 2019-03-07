@@ -31,7 +31,7 @@ public class Printer implements Visitor{
 
     @Override
     public void visitNodeComandoAtribuicao(NodeComandoAtribuicao node) {
-       
+        
     }
 
     @Override
@@ -104,10 +104,20 @@ public class Printer implements Visitor{
 
     @Override
     public void visitNodeTipoAgregado(NodeTipoAgregado node) {
+        if(node != null) {
+            System.out.println ("array [" +node.getLowerIndex()+ ".." +node.getHigherIndex()+ "] of ");
+            i++;
+            indent();
+            node.getTipo().visit(this);
+            i--;
+        }
     }
 
     @Override
     public void visitNodeTipoSimples(NodeTipoSimples node) {
+        if(node != null) {
+            System.out.println (node.getNome());
+        }
     }
     
 }

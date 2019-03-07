@@ -30,6 +30,7 @@ public class NodeTipoAgregado extends AbstratoTipo {
     public void setHigherIndex(AbstratoLiteral last) {
         this.higherIndex = last;
     }    
+        @Override
     public void visit (Visitor v){
         v.visitNodeTipoAgregado(this);
     }
