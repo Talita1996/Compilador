@@ -1,5 +1,7 @@
 package univasf.compiladores2019.daniel_talita.front_end.AST;
 
+import univasf.compiladores2019.daniel_talita.visitor.Visitor;
+
 public class NodeLiteralFloat extends AbstratoLiteral {
 
 	private Double valor;
@@ -15,6 +17,7 @@ public class NodeLiteralFloat extends AbstratoLiteral {
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
-    
-    
+        public void visit (Visitor v){
+            v.visitNodeLiteralFloat(this);
+        }
 }

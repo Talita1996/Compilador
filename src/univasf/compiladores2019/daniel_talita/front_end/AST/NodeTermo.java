@@ -1,5 +1,7 @@
 package univasf.compiladores2019.daniel_talita.front_end.AST;
 
+import univasf.compiladores2019.daniel_talita.visitor.Visitor;
+
 public class NodeTermo extends AST {
 	private NodeFator fator;
 	private NodeOperadorMul operador;
@@ -23,4 +25,7 @@ public class NodeTermo extends AST {
 	public void setFatoresADireita(NodeTermo fatoresADireita) {
 		this.fatoresADireita = fatoresADireita;
 	}
+        public void visit (Visitor v){
+            v.visitNodeTermo(this);
+        }
 }

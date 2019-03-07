@@ -1,5 +1,7 @@
 package univasf.compiladores2019.daniel_talita.front_end.AST;
 
+import univasf.compiladores2019.daniel_talita.visitor.Visitor;
+
 public class NodeComandoIterativo extends AbstratoComando {
 	
 	NodeExpressao expressao;
@@ -16,5 +18,7 @@ public class NodeComandoIterativo extends AbstratoComando {
 	public void setComando(AbstratoComando comando) {
 		this.comando = comando;
 	}
-	
+	public void visit (Visitor v){
+            v.visitNodeComandoIterativo(this);
+        }
 }

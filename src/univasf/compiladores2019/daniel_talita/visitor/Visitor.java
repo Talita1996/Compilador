@@ -1,0 +1,44 @@
+package univasf.compiladores2019.daniel_talita.visitor;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoAtribuicao;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoComposto;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoCondicional;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoIterativo;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeCorpo;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeDeclaracao;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeExpressao;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeExpressaoSimples;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeFator;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeIdentificador;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeLiteralBooleano;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeLiteralFloat;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeLiteralInteiro;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeOperadorAd;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeOperadorMul;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeOperadorRel;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodePrograma;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeTermo;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeTipoAgregado;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodeTipoSimples;
+
+public interface Visitor {
+    public void visitNodeComandoAtribuicao (NodeComandoAtribuicao node);
+    public void visitNodeComandoComposto (NodeComandoComposto node);
+    public void visitNodeComandoCondicional (NodeComandoCondicional node);
+    public void visitNodeComandoIterativo (NodeComandoIterativo node);
+    public void visitNodeCorpo (NodeCorpo node);
+    public void visitNodeDeclaracao (NodeDeclaracao node);
+    public void visitNodeExpressao (NodeExpressao node);
+    public void visitNodeExpressaoSimples (NodeExpressaoSimples node);
+    public void visitNodeFator (NodeFator node);
+    public void visitNodeIdentificador (NodeIdentificador node);
+    public void visitNodeLiteralBooleano (NodeLiteralBooleano node);
+    public void visitNodeLiteralFloat (NodeLiteralFloat node);
+    public void visitNodeLiteralInteiro (NodeLiteralInteiro node);
+    public void visitNodeOperadorAd (NodeOperadorAd node);
+    public void visitNodeOperadorMul (NodeOperadorMul node);
+    public void visitNodeOperadorRel (NodeOperadorRel node);
+    public void visitNodePrograma (NodePrograma node);
+    public void visitNodeTermo (NodeTermo node);
+    public void visitNodeTipoAgregado (NodeTipoAgregado node);
+    public void visitNodeTipoSimples (NodeTipoSimples node);
+}

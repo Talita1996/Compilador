@@ -1,8 +1,9 @@
 package univasf.compiladores2019.daniel_talita.front_end.AST;
 
+import univasf.compiladores2019.daniel_talita.visitor.Visitor;
+
 public class NodeComandoAtribuicao extends AbstratoComando {
 
-	
 	private NodeIdentificador id;
 	private NodeExpressao dimensoesSeForAgregadoSimples;
 	private NodeExpressao valorAtribuido;
@@ -25,7 +26,9 @@ public class NodeComandoAtribuicao extends AbstratoComando {
 	public void setValorAtribuido(NodeExpressao valorAtribuido) {
 		this.valorAtribuido = valorAtribuido;
 	}
-	
-	
-	
+        
+        @Override
+	public void visit (Visitor v){
+            v.visitNodeComandoAtribuicao(this);
+        }
 }

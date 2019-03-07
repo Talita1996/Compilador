@@ -1,5 +1,7 @@
 package univasf.compiladores2019.daniel_talita.front_end.AST;
 
+import univasf.compiladores2019.daniel_talita.visitor.Visitor;
+
 public class NodeTipoAgregado extends AbstratoTipo {
 
 	AbstratoTipo tipo;
@@ -28,4 +30,7 @@ public class NodeTipoAgregado extends AbstratoTipo {
     public void setHigherIndex(AbstratoLiteral last) {
         this.higherIndex = last;
     }    
+    public void visit (Visitor v){
+        v.visitNodeTipoAgregado(this);
+    }
 }

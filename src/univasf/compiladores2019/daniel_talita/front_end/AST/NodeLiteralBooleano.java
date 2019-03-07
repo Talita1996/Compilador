@@ -1,5 +1,7 @@
 package univasf.compiladores2019.daniel_talita.front_end.AST;
 
+import univasf.compiladores2019.daniel_talita.visitor.Visitor;
+
 public class NodeLiteralBooleano extends AbstratoLiteral {
 	
 	private Boolean valor;
@@ -15,6 +17,7 @@ public class NodeLiteralBooleano extends AbstratoLiteral {
 	public void setValor(Boolean valor) {
 		this.valor = valor;
 	}
-    
-    
+        public void visit (Visitor v){
+            v.visitNodeLiteralBooleano(this);
+        }
 }

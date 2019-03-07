@@ -1,5 +1,7 @@
 package univasf.compiladores2019.daniel_talita.front_end.AST;
 
+import univasf.compiladores2019.daniel_talita.visitor.Visitor;
+
 public class NodeCorpo extends AST {
 	
 	private NodeDeclaracao declaracoes;
@@ -18,4 +20,7 @@ public class NodeCorpo extends AST {
 	public void setComandos(NodeComandoComposto comandos) {
 		this.comandos = comandos;
 	}
+        public void visit (Visitor v){
+            v.visitNodeCorpo(this);
+        }
 }

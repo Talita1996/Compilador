@@ -1,5 +1,7 @@
 package univasf.compiladores2019.daniel_talita.front_end.AST;
 
+import univasf.compiladores2019.daniel_talita.visitor.Visitor;
+
 public class NodeExpressao extends AbstratoExpressao {
 
 	private NodeExpressaoSimples expressaoEsquerda, expressaoDireita;
@@ -30,4 +32,7 @@ public class NodeExpressao extends AbstratoExpressao {
 	public void setOperador(NodeOperadorRel operador) {
 		this.operador = operador;
 	}
+        public void visit (Visitor v){
+            v.visitNodeExpressao(this);
+        }
 }

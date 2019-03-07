@@ -1,5 +1,7 @@
 package univasf.compiladores2019.daniel_talita.front_end.AST;
 
+import univasf.compiladores2019.daniel_talita.visitor.Visitor;
+
 public class NodeDeclaracao extends AST {
 	
 	private NodeIdentificador name;
@@ -25,4 +27,7 @@ public class NodeDeclaracao extends AST {
 	public void setNext(NodeDeclaracao next) {
 		this.next = next;
 	}
+        public void visit (Visitor v){
+            v.visitNodeDeclaracao(this);
+        }
 }
