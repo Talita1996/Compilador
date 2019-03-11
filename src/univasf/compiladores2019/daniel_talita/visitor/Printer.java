@@ -92,14 +92,30 @@ public class Printer implements Visitor{
 
     @Override
     public void visitNodeOperadorRel(NodeOperadorRel node) {
+        if (node != null)
+            System.out.println(node.spelling);
     }
 
     @Override
     public void visitNodePrograma(NodePrograma node) {
+        if(node != null) {
+            if(node.getCorpoDoPrograma() != null)
+                node.getCorpoDoPrograma().visit(this);
+        }
     }
 
     @Override
     public void visitNodeTermo(NodeTermo node) {
+        if(node != null) {
+            node.getFator().visit(this);
+            if(node.getOperador() != null) {
+                i++;
+                indent();
+                node.getOperador().visit(this);
+                node.getFatoresADireita().visit(this);
+                i--;
+            }
+        }
     }
 
     @Override
