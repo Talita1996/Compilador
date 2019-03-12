@@ -6,7 +6,7 @@ public class NodeDeclaracao extends AST {
 	
 	private NodeIdentificador name;
 	private AbstratoTipo tipoDaVariavel;
-	private NodeDeclaracao next;
+	private NodeDeclaracao next = null;
 	
 	
 	public NodeIdentificador getName() {

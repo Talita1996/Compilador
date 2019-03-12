@@ -3,18 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/talit/Documents/NetBeansProjects/compilador/src/univasf/compiladores2019/daniel_talita/front_end/AST/NodeDeclaracao.java</file>
             <file>file:/C:/Users/talit/Documents/NetBeansProjects/compilador/src/univasf/compiladores2019/daniel_talita/front_end/Variavel.java</file>
+            <file>file:/C:/Users/talit/Documents/NetBeansProjects/compilador/src/univasf/compiladores2019/daniel_talita/front_end/AST/NodeDeclaracao.java</file>
             <file>file:/C:/Users/talit/Documents/NetBeansProjects/compilador/src/univasf/compiladores2019/daniel_talita/front_end/IdentificationTable.java</file>
-            <file>file:/C:/Users/talit/Documents/NetBeansProjects/compilador/src/univasf/compiladores2019/daniel_talita/front_end/Attribute.java</file>
-            <file>file:/C:/Users/talit/Documents/NetBeansProjects/compilador/src/univasf/compiladores2019/daniel_talita/front_end/AST/NodeTipoSimples.java</file>
-            <file>file:/C:/Users/talit/Documents/NetBeansProjects/compilador/src/univasf/compiladores2019/daniel_talita/front_end/AST/NodeLiteralInteiro.java</file>
-            <file>file:/C:/Users/talit/Documents/NetBeansProjects/compilador/src/univasf/compiladores2019/daniel_talita/front_end/AST/NodeTipoAgregado.java</file>
+            <file>file:/C:/Users/talit/Documents/NetBeansProjects/compilador/src/univasf/compiladores2019/daniel_talita/front_end/Checker.java</file>
             <file>file:/C:/Users/talit/Documents/NetBeansProjects/compilador/src/univasf/compiladores2019/daniel_talita/visitor/Printer.java</file>
-            <file>file:/C:/Users/talit/Documents/NetBeansProjects/compilador/src/univasf/compiladores2019/daniel_talita/front_end/AST/NodeOperadorMul.java</file>
-            <file>file:/C:/Users/talit/Documents/NetBeansProjects/compilador/src/univasf/compiladores2019/daniel_talita/front_end/AST/AbstratoTipo.java</file>
-            <file>file:/C:/Users/talit/Documents/NetBeansProjects/compilador/src/univasf/compiladores2019/daniel_talita/front_end/Parser.java</file>
-            <file>file:/C:/Users/talit/Documents/NetBeansProjects/compilador/src/univasf/compiladores2019/daniel_talita/front_end/AST/NodeIdentificador.java</file>
+            <file>file:/C:/Users/talit/Documents/NetBeansProjects/compilador/src/univasf/compiladores2019/daniel_talita/front_end/AST/NodePrograma.java</file>
+            <file>file:/C:/Users/talit/Documents/NetBeansProjects/compilador/src/univasf/compiladores2019/daniel_talita/view/Compilador.java</file>
+            <file>file:/C:/Users/talit/Documents/NetBeansProjects/compilador/src/univasf/compiladores2019/daniel_talita/front_end/AST/NodeCorpo.java</file>
         </group>
     </open-files>
 </project-private>

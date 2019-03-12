@@ -2,15 +2,18 @@ package univasf.compiladores2019.daniel_talita.view;
 
 import univasf.compiladores2019.daniel_talita.compilation_errors.LexicalError;
 import univasf.compiladores2019.daniel_talita.compilation_errors.SintaxeError;
+import univasf.compiladores2019.daniel_talita.front_end.AST.NodePrograma;
+import univasf.compiladores2019.daniel_talita.front_end.Checker;
 import univasf.compiladores2019.daniel_talita.front_end.Parser;
 import univasf.compiladores2019.daniel_talita.front_end.Scanner;
 import univasf.compiladores2019.daniel_talita.front_end.Token;
+import univasf.compiladores2019.daniel_talita.visitor.Printer;
 
 public class Compilador {
 
 	public static void main(String[] args) {
-		String codigofonte = "  "
-				+ "  while abacaxi then bolinha. 1.33 .33 1. ..2 ..33 1..2 1.. ola !Isso eh um comentario"
+		String codigofonte = "program programinha ;  var aux1, aux2 : integer; begin begin aux [ 20 + a > 30 - b ] := c; end; end.";
+				/*+ "  while abacaxi then bolinha. 1.33 .33 1. ..2 ..33 1..2 1.. ola !Isso eh um comentario"
 				+ "\nhey man how are you do for while: ; ( ) [] ) ] ) [ ] ( ) * 234 21 2 0 \r / <> <= >= ::= := 1.21.74..2.5...".concat(Character.toString('\000'));
 		codigofonte = "program bolinhaCao; \n begin \n perolaCao := 23; \n gato := true; \n end.".concat(Character.toString('\000'));
 		codigofonte = "program Compilador; \n "
@@ -21,9 +24,9 @@ public class Compilador {
 				+ " begin \n"
 				+ " Telefone[2+2] := 5+6 > 7+8; \n"
 				+ " if 3+1 then \n"
-				+ " Telefone[0] = 1 \n"
+				+ " Telefone[0] := 1; \n"
 				+ " else \n"
-				+ " Telefone[1] = 0 \n"
+				+ " Telefone[1] := 0; \n"
 				+ " end \n"
 				+ " end.";
 		Scanner scanner = new Scanner(codigofonte);
@@ -39,14 +42,14 @@ public class Compilador {
 			}
 		} catch (LexicalError e) {
 			System.out.println("Erro l�xico:\n" + e.getMessage());
-		}
+		}*/
 		
 		
-		System.out.println("\n\n\nIniciando analise sintatica");
-		codigofonte = "program bolinhaCao; \n begin \n perolaCao := 23; \n gato := true; \n end.";
+		System.out.println("\n\n\n---> Iniciando analise sintatica");
+		//codigofonte = "program bolinhaCao; \n begin \n perolaCao := 23; \n gato := true; \n end.";
 		
 		
-		codigofonte = "program Compilador; \n "
+		/*codigofonte = "program Compilador; \n "
 				+ "var X,Y,Z:integer; \n "
 				+ "var A,B,C: boolean; \n "
 				+ "var A,B,C: real;\n"
@@ -59,13 +62,15 @@ public class Compilador {
 				+ " else \n"
 				+ " Telefone[1] := 0; \n"
 				+ " end; \n"
-				+ " end.";
+				+ " end.";*/
 
 //		System.out.println(codigofonte);
-		
+		NodePrograma p = null; 
+                Printer printer = new Printer();
+                Checker checker = new Checker();
 		Parser parser = new Parser(codigofonte);
 		try {
-			parser.parse();
+			p = parser.parse();
 			System.out.println("Analise com sucesso!");
 		} catch (LexicalError e) {
 			System.out.println("Erro lexico");
@@ -74,6 +79,7 @@ public class Compilador {
 			System.out.println("Erro sintaxe");
 			e.printStackTrace();
 		}
-		
+		printer.print(p);
+                checker.check(p);
 	}
 }
