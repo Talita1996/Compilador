@@ -17,6 +17,7 @@ public class NodeLiteralBooleano extends AbstratoLiteral {
 	public void setValor(Boolean valor) {
 		this.valor = valor;
 	}
+        @Override
         public void visit (Visitor v){
             v.visitNodeLiteralBooleano(this);
         }

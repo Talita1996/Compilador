@@ -12,7 +12,7 @@ import univasf.compiladores2019.daniel_talita.visitor.Printer;
 public class Compilador {
 
 	public static void main(String[] args) {
-		String codigofonte = "program programinha ;  var aux1, aux2 : integer; begin begin aux [ 20 + a > 30 - b ] := c; end; end.";
+		String codigofonte = "program programinha ;  var ca, ta : integer; var li : array [1..2] of integer ; begin begin oi [ 20 + a > 30 - b ] := c; end; end.";
 				/*+ "  while abacaxi then bolinha. 1.33 .33 1. ..2 ..33 1..2 1.. ola !Isso eh um comentario"
 				+ "\nhey man how are you do for while: ; ( ) [] ) ] ) [ ] ( ) * 234 21 2 0 \r / <> <= >= ::= := 1.21.74..2.5...".concat(Character.toString('\000'));
 		codigofonte = "program bolinhaCao; \n begin \n perolaCao := 23; \n gato := true; \n end.".concat(Character.toString('\000'));

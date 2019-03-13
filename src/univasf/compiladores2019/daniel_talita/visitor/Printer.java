@@ -1,5 +1,6 @@
 package univasf.compiladores2019.daniel_talita.visitor;
 
+import java.io.PrintStream;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoAtribuicao;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoComposto;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoCondicional;
@@ -32,14 +33,15 @@ public class Printer implements Visitor{
     @Override
     public void visitNodeComandoAtribuicao(NodeComandoAtribuicao node) {
         if (node != null) {
+            i++;
+            indent();
             node.getId().visit(this);
             if (node.getDimensoesSeForAgregadoSimples() != null) {
-                i++;
-                indent();
                 node.getDimensoesSeForAgregadoSimples().visit(this);
-                i--;
             }
-            System.out.print(":=");
+            i=1;
+            indent();
+            System.out.println(":=");
             node.getValorAtribuido().visit(this);
         }
     }
@@ -78,9 +80,11 @@ public class Printer implements Visitor{
     public void visitNodeCorpo(NodeCorpo node) {
         if (node != null) {
             if (node.getDeclaracoes() != null) {
+                i=0;
                 node.getDeclaracoes().visit(this);
             }
             if (node.getComandos() != null){
+                i=0;
                 node.getComandos().visit(this);
             }
         }
@@ -89,17 +93,17 @@ public class Printer implements Visitor{
     @Override
     public void visitNodeDeclaracao(NodeDeclaracao node) {
         if (node != null) {
-            node.getName().visit(this);
-            if (node.getNext() != null) {
-                System.out.println(",");
+            if ( node.getTipoDaVariavel() != null) {
                 i++;
                 indent();
-                node.getNext().visit(this);
-                i--;
-            }
-            if ( node.getTipoDaVariavel() != null){
-                System.out.print(":");
                 node.getTipoDaVariavel().visit(this);
+            }
+            i++;
+            indent();
+            node.getName().visit(this);
+            i--;
+            if (node.getNext() != null) {
+                node.getNext().visit(this);
             }
         }
     }
@@ -107,16 +111,15 @@ public class Printer implements Visitor{
     @Override
     public void visitNodeExpressao(NodeExpressao node) {
         if (node != null) {
-            i++;
-            indent();
-            node.getExpressaoEsquerda().visit(this);
-            i--;
             if (node.getOperador() != null) {
                 i++;
                 indent();
                 node.getOperador().visit(this);
-                node.getExpressaoDireita().visit(this);
                 i--;
+            }
+            node.getExpressaoEsquerda().visit(this);
+            if (node.getExpressaoDireita() != null) {
+                node.getExpressaoDireita().visit(this);
             }
         }
     }
@@ -124,16 +127,18 @@ public class Printer implements Visitor{
     @Override
     public void visitNodeExpressaoSimples(NodeExpressaoSimples node) {
         if (node != null) {
-            i++;
-            indent();
-            node.getTermo().visit(this);
-            i--;
-            if (node.getOperador() != null) {
+            if (node.getTermo() != null)
+                if (node.getOperador() != null) {
+                    i++;
+                    indent();
+                    node.getOperador().visit(this);
+                }
                 i++;
                 indent();
-                node.getOperador().visit(this);
-                node.getTermosADireita().visit(this);
+                node.getTermo().visit(this);
                 i--;
+            if (node.getTermosADireita() != null) {
+                node.getTermosADireita().visit(this);
             }
         }
     }
@@ -142,7 +147,7 @@ public class Printer implements Visitor{
     public void visitNodeFator(NodeFator node) {
          if (node != null) {
             if (node.getId() != null) {
-                System.out.print(node.getId().spelling);
+                System.out.println(node.getId().spelling);
                 if (node.getExpressoes() != null){
                     i++;
                     indent();
@@ -153,10 +158,7 @@ public class Printer implements Visitor{
                 }
             } 
             if (node.getLiteral() != null) {
-                i++;
-                indent();
                 node.getLiteral().visit(this);
-                i--;
             }
             if (node.getExpressoes() != null) {
                 i++;
@@ -172,7 +174,7 @@ public class Printer implements Visitor{
     @Override
     public void visitNodeIdentificador(NodeIdentificador node) {
         if (node != null)
-            System.out.print(node.spelling);
+            System.out.println(node.spelling);
     }
 
     @Override
@@ -190,7 +192,7 @@ public class Printer implements Visitor{
     @Override
     public void visitNodeLiteralInteiro(NodeLiteralInteiro node) {
         if (node != null)
-            System.out.print(node.getValor());
+            System.out.println (node.getValor());
     }
 
     @Override
@@ -222,8 +224,8 @@ public class Printer implements Visitor{
     @Override
     public void visitNodeTermo(NodeTermo node) {
         if(node != null) {
-            if (node.getFator() != null)
-                node.getFator().visit(this);
+            if (node.getFator() != null){
+                node.getFator().visit(this);}
             if(node.getOperador() != null) {
                 i++;
                 indent();
@@ -237,11 +239,8 @@ public class Printer implements Visitor{
     @Override
     public void visitNodeTipoAgregado(NodeTipoAgregado node) {
         if(node != null) {
-            System.out.println ("array [" +node.getLowerIndex()+ ".." +node.getHigherIndex()+ "] of ");
-            i++;
-            indent();
+            System.out.print ("array of ");
             node.getTipo().visit(this);
-            i--;
         }
     }
 

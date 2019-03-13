@@ -162,7 +162,6 @@ public class Parser {
 		case Token.INTEGER:
 			//acceptIt();
 			tipo = new NodeTipoSimples(currentToken.spelling);
-                        System.out.println(currentToken.spelling);
 			acceptIt();
                         break;
 		case Token.BOOLEAN:
@@ -374,7 +373,6 @@ public class Parser {
 	private NodeFator parseFator() throws LexicalError, SintaxeError {
 
 		NodeFator fator = new NodeFator();
-
 		switch (currentToken.kind) {
 
 		case Token.IDENTIFIER:
@@ -422,7 +420,7 @@ public class Parser {
 		default:
 			throw new SintaxeError("Fator invalido", scanner.getLinha(), scanner.getColuna());
 		}
-		return null;
+		return fator;
 	}
 
 	/************************ METODO PRINCIPAL ************************/

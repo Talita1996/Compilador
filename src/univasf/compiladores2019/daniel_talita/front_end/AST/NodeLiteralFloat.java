@@ -17,6 +17,7 @@ public class NodeLiteralFloat extends AbstratoLiteral {
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
+        @Override
         public void visit (Visitor v){
             v.visitNodeLiteralFloat(this);
         }

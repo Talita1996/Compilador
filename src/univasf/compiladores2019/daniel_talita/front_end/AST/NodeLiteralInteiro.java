@@ -17,6 +17,8 @@ public class NodeLiteralInteiro extends AbstratoLiteral {
 	public void setValor(Integer valor) {
 		this.valor = valor;
 	}
+        
+        @Override
         public void visit (Visitor v){
             v.visitNodeLiteralInteiro(this);
         }
