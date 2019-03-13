@@ -160,16 +160,20 @@ public class Parser {
 			tipo = parseTipoAgregado();
 			break;
 		case Token.INTEGER:
-			acceptIt();
+			//acceptIt();
 			tipo = new NodeTipoSimples(currentToken.spelling);
-			break;
+                        System.out.println(currentToken.spelling);
+			acceptIt();
+                        break;
 		case Token.BOOLEAN:
-			acceptIt();
+			//acceptIt();
 			tipo = new NodeTipoSimples(currentToken.spelling);
+                        acceptIt();
 			break;
 		case Token.REAL:
-			acceptIt();
+			//acceptIt();
 			tipo = new NodeTipoSimples(currentToken.spelling);
+                        acceptIt();
 			break;
 
 		default:

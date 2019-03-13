@@ -31,63 +31,178 @@ public class Printer implements Visitor{
 
     @Override
     public void visitNodeComandoAtribuicao(NodeComandoAtribuicao node) {
-        
+        if (node != null) {
+            node.getId().visit(this);
+            if (node.getDimensoesSeForAgregadoSimples() != null) {
+                i++;
+                indent();
+                node.getDimensoesSeForAgregadoSimples().visit(this);
+                i--;
+            }
+            System.out.print(":=");
+            node.getValorAtribuido().visit(this);
+        }
     }
 
     @Override
     public void visitNodeComandoComposto(NodeComandoComposto node) {
+        if (node != null) {
+            node.getNext().visit(this);
+        }
     }
 
     @Override
     public void visitNodeComandoCondicional(NodeComandoCondicional node) {
+        if (node != null) {
+            i++;
+            indent();
+            node.getCondicao().visit(this);
+            node.getComandoIf().visit(this);
+            node.getComandoElse().visit(this);
+            i--;
+        }
     }
 
     @Override
     public void visitNodeComandoIterativo(NodeComandoIterativo node) {
+        if (node != null) {
+            i++;
+            indent();
+            node.getExpressao().visit(this);
+            node.getComando().visit(this);
+            i--;
+        }
     }
 
     @Override
     public void visitNodeCorpo(NodeCorpo node) {
+        if (node != null) {
+            if (node.getDeclaracoes() != null) {
+                node.getDeclaracoes().visit(this);
+            }
+            if (node.getComandos() != null){
+                node.getComandos().visit(this);
+            }
+        }
     }
 
     @Override
     public void visitNodeDeclaracao(NodeDeclaracao node) {
+        if (node != null) {
+            node.getName().visit(this);
+            if (node.getNext() != null) {
+                System.out.println(",");
+                i++;
+                indent();
+                node.getNext().visit(this);
+                i--;
+            }
+            if ( node.getTipoDaVariavel() != null){
+                System.out.print(":");
+                node.getTipoDaVariavel().visit(this);
+            }
+        }
     }
 
     @Override
     public void visitNodeExpressao(NodeExpressao node) {
+        if (node != null) {
+            i++;
+            indent();
+            node.getExpressaoEsquerda().visit(this);
+            i--;
+            if (node.getOperador() != null) {
+                i++;
+                indent();
+                node.getOperador().visit(this);
+                node.getExpressaoDireita().visit(this);
+                i--;
+            }
+        }
     }
 
     @Override
     public void visitNodeExpressaoSimples(NodeExpressaoSimples node) {
+        if (node != null) {
+            i++;
+            indent();
+            node.getTermo().visit(this);
+            i--;
+            if (node.getOperador() != null) {
+                i++;
+                indent();
+                node.getOperador().visit(this);
+                node.getTermosADireita().visit(this);
+                i--;
+            }
+        }
     }
 
     @Override
     public void visitNodeFator(NodeFator node) {
+         if (node != null) {
+            if (node.getId() != null) {
+                System.out.print(node.getId().spelling);
+                if (node.getExpressoes() != null){
+                    i++;
+                    indent();
+                    System.out.print("[");
+                    node.getExpressoes().visit(this);
+                    System.out.print("]");
+                    i--;
+                }
+            } 
+            if (node.getLiteral() != null) {
+                i++;
+                indent();
+                node.getLiteral().visit(this);
+                i--;
+            }
+            if (node.getExpressoes() != null) {
+                i++;
+                indent();
+                System.out.print("(");
+                node.getExpressoes().visit(this);
+                System.out.print(")");
+                i--;
+            }
+        }
     }
 
     @Override
     public void visitNodeIdentificador(NodeIdentificador node) {
+        if (node != null)
+            System.out.print(node.spelling);
     }
 
     @Override
-    public void visitNodeLiteralBooleano(NodeLiteralBooleano node) {
+    public void visitNodeLiteralBooleano(NodeLiteralBooleano node){
+        if (node != null)
+            System.out.print(node.getValor());
     }
 
     @Override
     public void visitNodeLiteralFloat(NodeLiteralFloat node) {
+        if (node != null)
+            System.out.print(node.getValor());
     }
 
     @Override
     public void visitNodeLiteralInteiro(NodeLiteralInteiro node) {
+        if (node != null)
+            System.out.print(node.getValor());
     }
 
     @Override
     public void visitNodeOperadorAd(NodeOperadorAd node) {
+        if (node != null)
+            System.out.println(node.spelling);
     }
 
     @Override
     public void visitNodeOperadorMul(NodeOperadorMul node) {
+        if (node != null)
+            System.out.println(node.spelling);
     }
 
     @Override
@@ -107,7 +222,8 @@ public class Printer implements Visitor{
     @Override
     public void visitNodeTermo(NodeTermo node) {
         if(node != null) {
-            node.getFator().visit(this);
+            if (node.getFator() != null)
+                node.getFator().visit(this);
             if(node.getOperador() != null) {
                 i++;
                 indent();

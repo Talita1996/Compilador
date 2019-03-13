@@ -1,6 +1,4 @@
 package univasf.compiladores2019.daniel_talita.front_end;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import univasf.compiladores2019.daniel_talita.compilation_errors.ContextualError;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoAtribuicao;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoComposto;
@@ -145,7 +143,7 @@ public class Checker implements Visitor {
     }
     
     public void check (NodePrograma p) {
-     System.out.println ("---> Iniciando identificacao de nomes");
+     System.out.println ("\n---> Iniciando identificacao de nomes");
      p.visit (this);
    }
     
