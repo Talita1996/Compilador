@@ -135,15 +135,15 @@ public class Parser {
 				last.setNext(aux);
 			}
 			last = aux;
-
+                        
 			accept(Token.IDENTIFIER);
 		}
 
 		accept(Token.COLON);
 		firstDeclaration.setTipoDaVariavel(parseTipo());
-		aux = firstDeclaration;
+		aux = firstDeclaration.getNext();
 
-		while (aux.getNext() != null) {
+		while (aux != null) {
 			aux.setTipoDaVariavel(firstDeclaration.getTipoDaVariavel());
 			aux = aux.getNext();
 		}
@@ -218,9 +218,8 @@ public class Parser {
 
 	private NodeComandoComposto parseComandoComposto() throws LexicalError, SintaxeError {
 		accept(Token.BEGIN);
-
 		NodeComandoComposto comando = new NodeComandoComposto();
-
+                
 		AbstratoComando first, last, aux;
 		first = last = null;
 
@@ -228,24 +227,30 @@ public class Parser {
 				|| (currentToken.kind == Token.BEGIN) || (currentToken.kind == Token.IDENTIFIER)) {
 			aux = parseComando();
 
-			if (first == null)
+			if (first == null){
 				first = aux;
+                                //System.out.println(currentToken.spelling);
+                                //System.out.println("aqui");
+                        }
 			else
 				last.setNext(aux);
+                        //System.out.println("aqui2");
 			last = aux;
 			accept(Token.SEMICOLON);
+                        //System.out.println(currentToken.spelling);
 		}
+                //System.out.println("aqu1");
 		accept(Token.END);
-
+                
 		comando.setNext(first);
 
 		return comando;
 	}
 
 	private AbstratoComando parseComando() throws LexicalError, SintaxeError {
-
+                
 		AbstratoComando comando;
-
+                
 		switch (currentToken.kind) {
 
 		case Token.IDENTIFIER:
@@ -305,11 +310,16 @@ public class Parser {
 	private NodeComandoCondicional parseCondicional() throws LexicalError, SintaxeError {
 
 		NodeComandoCondicional comando = new NodeComandoCondicional();
-
+                
 		acceptIt();
+                
 		comando.setCondicao(parseExpressao());
+                
 		accept(Token.THEN);
+                
 		comando.setComandoIf(parseComando());
+                accept(Token.SEMICOLON);
+                
 		if (currentToken.kind == Token.ELSE) {
 			acceptIt();
 			comando.setComandoElse(parseComando());
@@ -329,6 +339,7 @@ public class Parser {
 	private NodeExpressao parseExpressao() throws LexicalError, SintaxeError {
 		NodeExpressao expressao = new NodeExpressao();
 		expressao.setExpressaoEsquerda(parseExpressaoSimples());
+                
 		if (currentToken.kind == Token.LESS || currentToken.kind == Token.LESS_EQUAL || currentToken.kind == Token.MORE
 				|| currentToken.kind == Token.MORE_EQUAL || currentToken.kind == Token.EQUALS
 				|| currentToken.kind == Token.DIFERENT) {

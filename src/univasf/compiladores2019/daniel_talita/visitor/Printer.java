@@ -97,12 +97,14 @@ public class Printer implements Visitor{
                 i++;
                 indent();
                 node.getTipoDaVariavel().visit(this);
+                i--;
             }
             i++;
             indent();
             node.getName().visit(this);
             i--;
             if (node.getNext() != null) {
+                i++;
                 node.getNext().visit(this);
             }
         }
