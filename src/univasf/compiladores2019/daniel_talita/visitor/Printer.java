@@ -117,10 +117,10 @@ public class Printer implements Visitor{
                 i++;
                 indent();
                 node.getOperador().visit(this);
-                i--;
             }
             node.getExpressaoEsquerda().visit(this);
             if (node.getExpressaoDireita() != null) {
+                i--;
                 node.getExpressaoDireita().visit(this);
             }
         }
@@ -135,10 +135,7 @@ public class Printer implements Visitor{
                     indent();
                     node.getOperador().visit(this);
                 }
-                i++;
-                indent();
                 node.getTermo().visit(this);
-                i--;
             if (node.getTermosADireita() != null) {
                 node.getTermosADireita().visit(this);
             }
@@ -151,23 +148,17 @@ public class Printer implements Visitor{
             if (node.getId() != null) {
                 System.out.println(node.getId().spelling);
                 if (node.getExpressoes() != null){
-                    i++;
-                    indent();
-                    System.out.print("[");
                     node.getExpressoes().visit(this);
-                    System.out.print("]");
-                    i--;
                 }
             } 
             if (node.getLiteral() != null) {
-                node.getLiteral().visit(this);
-            }
-            if (node.getExpressoes() != null) {
                 i++;
                 indent();
-                System.out.print("(");
+                node.getLiteral().visit(this);
+                i--;
+            }
+            if (node.getExpressoes() != null) {
                 node.getExpressoes().visit(this);
-                System.out.print(")");
                 i--;
             }
         }
@@ -226,15 +217,14 @@ public class Printer implements Visitor{
     @Override
     public void visitNodeTermo(NodeTermo node) {
         if(node != null) {
-            if (node.getFator() != null){
-                node.getFator().visit(this);}
             if(node.getOperador() != null) {
                 i++;
                 indent();
                 node.getOperador().visit(this);
-                node.getFatoresADireita().visit(this);
-                i--;
             }
+            node.getFator().visit(this);
+            if (node.getFatoresADireita() != null)
+                node.getFatoresADireita().visit(this);
         }
     }
 

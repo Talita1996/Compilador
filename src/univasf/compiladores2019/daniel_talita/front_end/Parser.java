@@ -337,6 +337,7 @@ public class Parser {
 	}
 
 	private NodeExpressao parseExpressao() throws LexicalError, SintaxeError {
+            
 		NodeExpressao expressao = new NodeExpressao();
 		expressao.setExpressaoEsquerda(parseExpressaoSimples());
                 
