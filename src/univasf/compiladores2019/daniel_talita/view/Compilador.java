@@ -22,7 +22,7 @@ public class Compilador {
 				+ "var abacaxi: array[2..2] of integer ; \n"
 				+ " begin \n" 
 				+ " begin \n"
-				+ " Telefone[2+2] := (5+6)-2 > 3*4/1; \n"
+				+ " Telefona := 5+6*2 > 3+4*1; \n"
 				+ " if 3+1 then \n"
 				+ " Telefone[0] := 1; \n"
 				+ " else \n"

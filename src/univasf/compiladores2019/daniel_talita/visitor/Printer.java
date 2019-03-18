@@ -39,11 +39,12 @@ public class Printer implements Visitor{
             if (node.getDimensoesSeForAgregadoSimples() != null) {
                 node.getDimensoesSeForAgregadoSimples().visit(this);
             }
-            i=1;
             indent();
             System.out.println(":=");
             node.getValorAtribuido().visit(this);
         }
+        if (node.getNext() != null)
+            node.getNext().visit(this);
     }
 
     @Override
@@ -60,9 +61,13 @@ public class Printer implements Visitor{
             indent();
             node.getCondicao().visit(this);
             node.getComandoIf().visit(this);
-            node.getComandoElse().visit(this);
-            i--;
+            if (node.getComandoElse() != null) {
+                node.getComandoElse().visit(this);
+                i--;
+            }
         }
+        if (node.getNext() != null)
+            node.getNext().visit(this);
     }
 
     @Override
@@ -74,6 +79,8 @@ public class Printer implements Visitor{
             node.getComando().visit(this);
             i--;
         }
+        if (node.getNext() != null)
+            node.getNext().visit(this);
     }
 
     @Override
@@ -146,7 +153,7 @@ public class Printer implements Visitor{
     public void visitNodeFator(NodeFator node) {
          if (node != null) {
             if (node.getId() != null) {
-                System.out.println(node.getId().spelling);
+                node.getId().visit(this);
                 if (node.getExpressoes() != null){
                     node.getExpressoes().visit(this);
                 }

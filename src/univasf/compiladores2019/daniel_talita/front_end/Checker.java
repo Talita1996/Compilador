@@ -28,22 +28,44 @@ public class Checker implements Visitor {
 
     @Override
     public void visitNodeComandoAtribuicao(NodeComandoAtribuicao node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (node != null) {
+            node.getId().visit(this);
+            if (node.getDimensoesSeForAgregadoSimples() != null) {
+                node.getDimensoesSeForAgregadoSimples().visit(this);
+            }
+            node.getValorAtribuido().visit(this);
+        }
+        if (node.getNext() != null)
+            node.getNext().visit(this);
     }
 
     @Override
     public void visitNodeComandoComposto(NodeComandoComposto node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (node != null) {
+            node.getNext().visit(this);
+        }
     }
 
     @Override
     public void visitNodeComandoCondicional(NodeComandoCondicional node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         if (node != null) {
+            node.getCondicao().visit(this);
+            node.getComandoIf().visit(this);
+            if (node.getComandoElse() != null)
+                node.getComandoElse().visit(this);
+            if (node.getNext() != null)
+            node.getNext().visit(this);
+        }
     }
 
     @Override
     public void visitNodeComandoIterativo(NodeComandoIterativo node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (node != null) {
+            node.getExpressao().visit(this);
+            node.getComando().visit(this);
+        }
+        if (node.getNext() != null)
+            node.getNext().visit(this);
     }
 
     @Override
@@ -51,6 +73,8 @@ public class Checker implements Visitor {
         if(node != null) {
             if(node.getDeclaracoes() != null)
                 node.getDeclaracoes().visit(this);
+            if (node.getComandos() != null)
+                node.getComandos().visit(this);
         } 
     }
 
@@ -71,52 +95,84 @@ public class Checker implements Visitor {
 
     @Override
     public void visitNodeExpressao(NodeExpressao node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (node != null) {
+            if (node.getOperador() != null) {
+                node.getOperador().visit(this);
+            }
+            node.getExpressaoEsquerda().visit(this);
+            if (node.getExpressaoDireita() != null) {
+                node.getExpressaoDireita().visit(this);
+            }
+        }
     }
 
     @Override
     public void visitNodeExpressaoSimples(NodeExpressaoSimples node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       if (node != null) {
+            if (node.getTermo() != null)
+                if (node.getOperador() != null) {
+                    node.getOperador().visit(this);
+                }
+                node.getTermo().visit(this);
+            if (node.getTermosADireita() != null) {
+                node.getTermosADireita().visit(this);
+            }
+        }
     }
 
     @Override
     public void visitNodeFator(NodeFator node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (node != null) {
+            if (node.getId() != null) {
+               node.getId().visit(this);
+            } 
+            if (node.getLiteral() != null) {
+                node.getLiteral().visit(this);
+            }
+            if (node.getExpressoes() != null) {
+                node.getExpressoes().visit(this);
+            }
+        }
     }
 
     @Override
     public void visitNodeIdentificador(NodeIdentificador node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (node != null)
+             try {
+                t.retrieve(node.spelling);
+            } catch (ContextualError e) {
+                System.out.println("Erro de contexto! "+e.getMessage());
+            }
     }
 
     @Override
     public void visitNodeLiteralBooleano(NodeLiteralBooleano node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        node.getValor();
     }
 
     @Override
     public void visitNodeLiteralFloat(NodeLiteralFloat node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        node.getValor();
     }
 
     @Override
     public void visitNodeLiteralInteiro(NodeLiteralInteiro node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        node.getValor(); 
     }
 
     @Override
     public void visitNodeOperadorAd(NodeOperadorAd node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //node.visit(this);
     }
 
     @Override
     public void visitNodeOperadorMul(NodeOperadorMul node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //node.visit(this);
     }
 
     @Override
     public void visitNodeOperadorRel(NodeOperadorRel node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //node.visit(this);
     }
 
     @Override
@@ -129,17 +185,26 @@ public class Checker implements Visitor {
 
     @Override
     public void visitNodeTermo(NodeTermo node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(node != null) {
+            if(node.getOperador() != null) {
+                node.getOperador().visit(this);
+            }
+            node.getFator().visit(this);
+            if (node.getFatoresADireita() != null)
+                node.getFatoresADireita().visit(this);
+        }
     }
 
     @Override
     public void visitNodeTipoAgregado(NodeTipoAgregado node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         if(node != null) {
+            node.getTipo().visit(this);
+        }
     }
 
     @Override
     public void visitNodeTipoSimples(NodeTipoSimples node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        node.getNome();
     }
     
     public void check (NodePrograma p) {

@@ -229,17 +229,12 @@ public class Parser {
 
 			if (first == null){
 				first = aux;
-                                //System.out.println(currentToken.spelling);
-                                //System.out.println("aqui");
                         }
 			else
 				last.setNext(aux);
-                        //System.out.println("aqui2");
 			last = aux;
 			accept(Token.SEMICOLON);
-                        //System.out.println(currentToken.spelling);
 		}
-                //System.out.println("aqu1");
 		accept(Token.END);
                 
 		comando.setNext(first);

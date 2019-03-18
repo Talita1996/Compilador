@@ -33,7 +33,7 @@ public class IdentificationTable {
             return identificador.get(i).getDeclaracao();
         }
         else {
-            throw new ContextualError("Erro! A variavel" +var+ " não foi declarada");
+            throw new ContextualError("A variavel " +var+ " não foi declarada");
         }
     }
 }

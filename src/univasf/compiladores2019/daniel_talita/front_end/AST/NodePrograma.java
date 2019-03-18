@@ -6,7 +6,6 @@ public class NodePrograma extends AST{
 	
 	private NodeCorpo corpoDoPrograma;
 	
-	
 	public NodeCorpo getCorpoDoPrograma() {
 		return corpoDoPrograma;
 	}
