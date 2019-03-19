@@ -24,6 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 
 public class TelaPrincipal {
 
@@ -79,7 +80,7 @@ public class TelaPrincipal {
 		frmCompilador.setBackground(new Color(204, 255, 204));
 		frmCompilador.setForeground(new Color(204, 255, 102));
 		frmCompilador.setIconImage(
-				Toolkit.getDefaultToolkit().getImage(TelaPrincipal.class.getResource("/img/iconMenuAplicacao.png")));
+				Toolkit.getDefaultToolkit().getImage(TelaPrincipal.class.getResource("/resources/iconMenuAplicacao.png")));
 		frmCompilador.setResizable(false);
 		frmCompilador.setTitle("CompiladorOriginal Mini-Pascal (Daniel & Talita 2019.1)");
 		frmCompilador.setBounds(100, 100, 800, 600);
@@ -182,7 +183,7 @@ public class TelaPrincipal {
 
 			}
 		});
-		btnAbrirArquivo.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/img/openfolderIcon.png")));
+		btnAbrirArquivo.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/resources/openfolderIcon.png")));
 		btnAbrirArquivo.setBounds(40, 130, 180, 30);
 		frmCompilador.getContentPane().add(btnAbrirArquivo);
 
@@ -203,7 +204,7 @@ public class TelaPrincipal {
 		frmCompilador.getContentPane().add(btnLimpar);
 
 		JButton btnCompilar = new JButton("Compilar");
-		btnCompilar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/img/compiler.png")));
+		btnCompilar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/resources/compiler.png")));
 		btnCompilar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -219,5 +220,25 @@ public class TelaPrincipal {
 		});
 		btnCompilar.setBounds(507, 530, 180, 30);
 		frmCompilador.getContentPane().add(btnCompilar);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/resources/logo_univasf.png")));
+		lblNewLabel.setBounds(40, 11, 129, 81);
+		frmCompilador.getContentPane().add(lblNewLabel);
+		
+		JLabel lblUniversidadeFederalDo = new JLabel("Gradua\u00E7\u00E3o em Engenharia da Computa\u00E7\u00E3o");
+		lblUniversidadeFederalDo.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblUniversidadeFederalDo.setBounds(273, 38, 385, 37);
+		frmCompilador.getContentPane().add(lblUniversidadeFederalDo);
+		
+		JLabel label = new JLabel("Universidade Federal do Vale do S\u00E3o Francisco");
+		label.setFont(new Font("Tahoma", Font.BOLD, 24));
+		label.setBounds(179, 11, 581, 37);
+		frmCompilador.getContentPane().add(label);
+		
+		JLabel lblCompiladorParaLinguagem = new JLabel("Compilador MiniPascal. Alunos: Daniel Lucas e Talita ");
+		lblCompiladorParaLinguagem.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblCompiladorParaLinguagem.setBounds(223, 59, 549, 60);
+		frmCompilador.getContentPane().add(lblCompiladorParaLinguagem);
 	}
 }
