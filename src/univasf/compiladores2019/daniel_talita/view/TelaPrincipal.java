@@ -114,9 +114,16 @@ public class TelaPrincipal {
 		textSaidaCompilador.setContentType("text/html");
 		JScrollPane scrollSaidaCompilador = new JScrollPane(textSaidaCompilador,
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollSaidaCompilador.setBounds(420, 190, 340, 320);
+		scrollSaidaCompilador.setBounds(420, 190, 340, 120);
 		scrollSaidaCompilador.setAutoscrolls(true);
 		frmCompilador.getContentPane().add(scrollSaidaCompilador);
+
+		JTextPane textAST = new JTextPane();
+		textAST.setEditable(false);
+		JScrollPane scrollAST = new JScrollPane(textAST, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollAST.setBounds(420, 310, 340, 200);
+		frmCompilador.getContentPane().add(scrollAST);
 
 		JButton btnAbrirArquivo = new JButton("Selecionar arquivo");
 		btnAbrirArquivo.addActionListener(new ActionListener() {
@@ -128,6 +135,7 @@ public class TelaPrincipal {
 				limparTexto(textDiretorioArquivo);
 				limparTexto(textCodigoFonte);
 				limparTexto(textSaidaCompilador);
+				limparTexto(textAST);
 
 				JFileChooser fileChooser = inicializaFileChooser();
 				int respostaDoFileChooser = fileChooser.showOpenDialog(null);
@@ -188,6 +196,7 @@ public class TelaPrincipal {
 				limparTexto(textDiretorioArquivo);
 				limparTexto(textCodigoFonte);
 				limparTexto(textSaidaCompilador);
+				limparTexto(textAST);
 			}
 		});
 		btnLimpar.setBounds(135, 530, 180, 30);
@@ -202,7 +211,9 @@ public class TelaPrincipal {
 					imprimeTexto(textSaidaCompilador, "ERRO! Nenhum arquivo com código fonte foi carregado");
 				} else {
 					compilador = new Compilador(codigoFonte.toString());
-					imprimeTexto(textSaidaCompilador, compilador.compilar());
+					SaidaDoCompilador saidaDoCompilador = compilador.compilar();
+					imprimeTexto(textSaidaCompilador, saidaDoCompilador.getAvisosDaCompilacao());
+					imprimeTexto(textAST, saidaDoCompilador.getArvoreDeSintaxeAbstrata());
 				}
 			}
 		});
