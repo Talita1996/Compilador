@@ -1,6 +1,5 @@
 package univasf.compiladores2019.daniel_talita.visitor;
 
-import java.io.PrintStream;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoAtribuicao;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoComposto;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoCondicional;
