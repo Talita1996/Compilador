@@ -5,11 +5,11 @@ import univasf.compiladores2019.daniel_talita.compilation_errors.LexicalError;
 /**
  * 
  * Esta classe implementa métodos de analise léxica para reconhecer tokens da
- * linguagem de programação mini-triangle. O referencial teórico empregado pode
- * ser encontrado no livro Programming Language Processors in Java, por DAVID A
- * WATT e DERYCK F BROWN, e nas notas de aula do professor Dr. Marcus Vinícius
- * Midena Ramos da Universidade Federal do Vale do Sâo Francisco, disponivel em
- * <http://www.marcusramos.com.br/univasf/c-2018-2/index.html>.
+ * linguagem de programação mini-triangle. O referencial teórico empregado
+ * pode ser encontrado no livro Programming Language Processors in Java, por
+ * DAVID A WATT e DERYCK F BROWN, e nas notas de aula do professor Dr. Marcus
+ * Vinícius Midena Ramos da Universidade Federal do Vale do Sâo Francisco,
+ * disponivel em <http://www.marcusramos.com.br/univasf/c-2018-2/index.html>.
  * 
  * Documentações auxiliares, a gramatica mini-triangle e a gramática léxica
  * podem ser acessados em <>
@@ -55,7 +55,7 @@ public class Scanner {
 			currentChar = codigoFonte.charAt(posicaoDeLeitura);
 
 		} else {
-			throw new LexicalError("O caractere \"" + expectedChar + "\" (cod. ASCCI: " + (int) currentChar
+			throw new LexicalError("O caractere \"" + expectedChar + "\" (cod. ASCCI: " + (int) expectedChar
 					+ ")  era o esperado mas \"" + currentChar + "\" (cod. ASCCI: " + (int) currentChar
 					+ ") foi recebido", linha, coluna);
 		}
@@ -242,6 +242,9 @@ public class Scanner {
 				takeIt();
 			linha++;
 			coluna = 1;
+			if (currentChar == '\r') // alguns editores adicionam o retorno de carro, que se estivesse na mesma linha
+										// de um comentario n�o seria consumido
+				takeIt();
 			take('\n');
 			break;
 		case ' ':

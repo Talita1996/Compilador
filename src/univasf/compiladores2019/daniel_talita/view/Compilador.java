@@ -29,10 +29,14 @@ public class Compilador {
 	public SaidaDoCompilador compilar() {
 		SaidaDoCompilador saida = new SaidaDoCompilador();
 		try {
+			
 			p = parser.parse();
 
 			avisosDeCompilacao.append(InterfaceGraficaUtil.SUCESSO_ANALISE_LEXICA_MSG).append("\n")
 					.append(InterfaceGraficaUtil.SUCESSO_ANALISE_SINTATICA_MSG);
+			
+			ast.append(printer.print(p));
+			checker.check(p);
 
 		} catch (LexicalError e) {
 			avisosDeCompilacao.append(InterfaceGraficaUtil.FALHA_ANALISE_LEXICA_MSG).append("\n\n")
@@ -43,8 +47,7 @@ public class Compilador {
 					.append(e.getMessage());
 			e.printStackTrace();
 		}
-		ast.append(printer.print(p));
-		checker.check(p);
+
 		
 		saida.setAvisosDaCompilacao(avisosDeCompilacao.toString());
 		saida.setArvoreDeSintaxeAbstrata(ast.toString());

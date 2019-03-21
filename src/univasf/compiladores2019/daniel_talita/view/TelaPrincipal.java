@@ -76,11 +76,10 @@ public class TelaPrincipal {
 	 */
 	private void initialize() {
 		frmCompilador = new JFrame();
+		frmCompilador.setIconImage(Toolkit.getDefaultToolkit().getImage(TelaPrincipal.class.getResource("/img/iconMenuAplicacao.png")));
 		frmCompilador.getContentPane().setBackground(new Color(255, 255, 204));
 		frmCompilador.setBackground(new Color(204, 255, 204));
 		frmCompilador.setForeground(new Color(204, 255, 102));
-		frmCompilador.setIconImage(
-				Toolkit.getDefaultToolkit().getImage(TelaPrincipal.class.getResource("/resources/iconMenuAplicacao.png")));
 		frmCompilador.setResizable(false);
 		frmCompilador.setTitle("CompiladorOriginal Mini-Pascal (Daniel & Talita 2019.1)");
 		frmCompilador.setBounds(100, 100, 800, 600);
@@ -183,7 +182,7 @@ public class TelaPrincipal {
 
 			}
 		});
-		btnAbrirArquivo.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/resources/openfolderIcon.png")));
+		btnAbrirArquivo.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/img/openfolderIcon.png")));
 		btnAbrirArquivo.setBounds(40, 130, 180, 30);
 		frmCompilador.getContentPane().add(btnAbrirArquivo);
 
@@ -204,7 +203,7 @@ public class TelaPrincipal {
 		frmCompilador.getContentPane().add(btnLimpar);
 
 		JButton btnCompilar = new JButton("Compilar");
-		btnCompilar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/resources/compiler.png")));
+		btnCompilar.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/img/compiler.png")));
 		btnCompilar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -222,7 +221,7 @@ public class TelaPrincipal {
 		frmCompilador.getContentPane().add(btnCompilar);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/resources/logo_univasf.png")));
+		lblNewLabel.setIcon(new ImageIcon(TelaPrincipal.class.getResource("/img/logo_univasf.png")));
 		lblNewLabel.setBounds(40, 11, 129, 81);
 		frmCompilador.getContentPane().add(lblNewLabel);
 		
