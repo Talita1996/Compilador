@@ -1,5 +1,4 @@
 package univasf.compiladores2019.daniel_talita.visitor;
-
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoAtribuicao;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoComposto;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoCondicional;
@@ -60,8 +59,6 @@ public class Printer implements Visitor {
 	@Override
 	public void visitNodeComandoCondicional(NodeComandoCondicional node) {
 		if (node != null) {
-			i++;
-			indent();
 			node.getCondicao().visit(this);
 			node.getComandoIf().visit(this);
 			if (node.getComandoElse() != null) {
@@ -139,12 +136,13 @@ public class Printer implements Visitor {
 	@Override
 	public void visitNodeExpressaoSimples(NodeExpressaoSimples node) {
 		if (node != null) {
-			if (node.getTermo() != null)
+			if (node.getTermo() != null){
 				if (node.getOperador() != null) {
 					i++;
 					indent();
 					node.getOperador().visit(this);
 				}
+                        }
 			node.getTermo().visit(this);
 			if (node.getTermosADireita() != null) {
 				node.getTermosADireita().visit(this);
@@ -156,7 +154,10 @@ public class Printer implements Visitor {
 	public void visitNodeFator(NodeFator node) {
 		if (node != null) {
 			if (node.getId() != null) {
+                                i++;
+				indent();
 				node.getId().visit(this);
+                                i--;
 				if (node.getExpressoes() != null) {
 					node.getExpressoes().visit(this);
 				}
@@ -255,7 +256,7 @@ public class Printer implements Visitor {
 	@Override
 	public void visitNodeTipoAgregado(NodeTipoAgregado node) {
 		if (node != null) {
-			ast.append("array of");
+			ast.append("array of ");
 			System.out.print("array of ");
 			node.getTipo().visit(this);
 		}
