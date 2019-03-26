@@ -28,7 +28,7 @@ public class IdentificationTable {
     public NodeDeclaracao retrieve (String var) throws ContextualError {
 // Retorna o atributo associado com o identificador de entrada. Se não houver nenhum, retorna null
         i=0;
-        while ((i <= last) && (!identificador.get(i).equals(var))) i++;
+        while ((i <= last) && (!identificador.get(i).getNome().equals(var))) i++;
         if (i <= last){
             return identificador.get(i).getDeclaracao();
         }
