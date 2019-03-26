@@ -38,16 +38,23 @@ public class Printer implements Visitor {
                         indent();
 			System.out.println(":=");
 			ast.append(":=").append("\n");
+                        
+                        i++;
 			indent();
 			node.getId().visit(this);
                         System.out.println();
+                        i--;
+                        
 			if (node.getDimensoesSeForAgregadoSimples() != null) {
 				node.getDimensoesSeForAgregadoSimples().visit(this);
 			}
 			node.getValorAtribuido().visit(this);
+                        i--;
 		}
-		if (node.getNext() != null)
+		if (node.getNext() != null) {
+                        i--;
 			node.getNext().visit(this);
+                }
 	}
 
 	@Override
@@ -109,7 +116,6 @@ public class Printer implements Visitor {
 			i--;
 			
 			if (node.getNext() != null) {
-				i++;
 				node.getNext().visit(this);
 			}
 		}
@@ -143,6 +149,7 @@ public class Printer implements Visitor {
                         }
 			node.getTermo().visit(this);
 			if (node.getTermosADireita() != null) {
+                                i--;
 				node.getTermosADireita().visit(this);
 			}
 		}
@@ -247,8 +254,9 @@ public class Printer implements Visitor {
 				node.getOperador().visit(this);
 			}
 			node.getFator().visit(this);
-			if (node.getFatoresADireita() != null)
+			if (node.getFatoresADireita() != null){
 				node.getFatoresADireita().visit(this);
+                        }
 		}
 	}
 
