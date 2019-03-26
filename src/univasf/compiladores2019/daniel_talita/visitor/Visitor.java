@@ -1,4 +1,5 @@
 package univasf.compiladores2019.daniel_talita.visitor;
+import univasf.compiladores2019.daniel_talita.compilation_errors.ContextualError;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoAtribuicao;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoComposto;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoCondicional;
@@ -21,24 +22,24 @@ import univasf.compiladores2019.daniel_talita.front_end.AST.NodeTipoAgregado;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeTipoSimples;
 
 public interface Visitor {
-    public void visitNodeComandoAtribuicao (NodeComandoAtribuicao node);
-    public void visitNodeComandoComposto (NodeComandoComposto node);
-    public void visitNodeComandoCondicional (NodeComandoCondicional node);
-    public void visitNodeComandoIterativo (NodeComandoIterativo node);
-    public void visitNodeCorpo (NodeCorpo node);
-    public void visitNodeDeclaracao (NodeDeclaracao node);
-    public void visitNodeExpressao (NodeExpressao node);
-    public void visitNodeExpressaoSimples (NodeExpressaoSimples node);
-    public void visitNodeFator (NodeFator node);
-    public void visitNodeIdentificador (NodeIdentificador node);
+    public void visitNodeComandoAtribuicao (NodeComandoAtribuicao node) throws ContextualError;
+    public void visitNodeComandoComposto (NodeComandoComposto node) throws ContextualError;
+    public void visitNodeComandoCondicional (NodeComandoCondicional node) throws ContextualError;
+    public void visitNodeComandoIterativo (NodeComandoIterativo node) throws ContextualError;
+    public void visitNodeCorpo (NodeCorpo node) throws ContextualError;
+    public void visitNodeDeclaracao (NodeDeclaracao node) throws ContextualError;
+    public void visitNodeExpressao (NodeExpressao node) throws ContextualError;
+    public void visitNodeExpressaoSimples (NodeExpressaoSimples node) throws ContextualError;
+    public void visitNodeFator (NodeFator node) throws ContextualError;
+    public void visitNodeIdentificador (NodeIdentificador node) throws ContextualError;
     public void visitNodeLiteralBooleano (NodeLiteralBooleano node);
     public void visitNodeLiteralFloat (NodeLiteralFloat node);
     public void visitNodeLiteralInteiro (NodeLiteralInteiro node);
     public void visitNodeOperadorAd (NodeOperadorAd node);
     public void visitNodeOperadorMul (NodeOperadorMul node);
     public void visitNodeOperadorRel (NodeOperadorRel node);
-    public void visitNodePrograma (NodePrograma node);
-    public void visitNodeTermo (NodeTermo node);
+    public void visitNodePrograma (NodePrograma node) throws ContextualError;
+    public void visitNodeTermo (NodeTermo node) throws ContextualError;
     public void visitNodeTipoAgregado (NodeTipoAgregado node);
     public void visitNodeTipoSimples (NodeTipoSimples node);
 }

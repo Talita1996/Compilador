@@ -1,5 +1,6 @@
 package univasf.compiladores2019.daniel_talita.front_end.AST;
 
+import univasf.compiladores2019.daniel_talita.compilation_errors.ContextualError;
 import univasf.compiladores2019.daniel_talita.visitor.Visitor;
 
 public class NodeDeclaracao extends AST {
@@ -27,7 +28,7 @@ public class NodeDeclaracao extends AST {
 	public void setNext(NodeDeclaracao next) {
 		this.next = next;
 	}
-        public void visit (Visitor v){
+        public void visit (Visitor v) throws ContextualError{
             v.visitNodeDeclaracao(this);
         }
 }

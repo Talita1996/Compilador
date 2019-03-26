@@ -1,4 +1,5 @@
 package univasf.compiladores2019.daniel_talita.front_end.AST;
+import univasf.compiladores2019.daniel_talita.compilation_errors.ContextualError;
 import univasf.compiladores2019.daniel_talita.visitor.Visitor;
 
 public class NodeCorpo extends AST {
@@ -19,7 +20,7 @@ public class NodeCorpo extends AST {
 	public void setComandos(NodeComandoComposto comandos) {
 		this.comandos = comandos;
 	}
-        public void visit (Visitor v){
+        public void visit (Visitor v) throws ContextualError{
             v.visitNodeCorpo(this);
         }
 }

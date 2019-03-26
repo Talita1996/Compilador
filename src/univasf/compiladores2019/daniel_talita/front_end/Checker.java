@@ -27,7 +27,7 @@ public class Checker implements Visitor {
     IdentificationTable t = new IdentificationTable();
 
     @Override
-    public void visitNodeComandoAtribuicao(NodeComandoAtribuicao node) {
+    public void visitNodeComandoAtribuicao(NodeComandoAtribuicao node) throws ContextualError {
         if (node != null) {
             node.getId().visit(this);
             if (node.getDimensoesSeForAgregadoSimples() != null) {
@@ -40,14 +40,14 @@ public class Checker implements Visitor {
     }
 
     @Override
-    public void visitNodeComandoComposto(NodeComandoComposto node) {
+    public void visitNodeComandoComposto(NodeComandoComposto node) throws ContextualError {
         if (node != null) {
             node.getNext().visit(this);
         }
     }
 
     @Override
-    public void visitNodeComandoCondicional(NodeComandoCondicional node) {
+    public void visitNodeComandoCondicional(NodeComandoCondicional node) throws ContextualError {
          if (node != null) {
             node.getCondicao().visit(this);
             node.getComandoIf().visit(this);
@@ -59,7 +59,7 @@ public class Checker implements Visitor {
     }
 
     @Override
-    public void visitNodeComandoIterativo(NodeComandoIterativo node) {
+    public void visitNodeComandoIterativo(NodeComandoIterativo node) throws ContextualError {
         if (node != null) {
             node.getExpressao().visit(this);
             node.getComando().visit(this);
@@ -69,7 +69,7 @@ public class Checker implements Visitor {
     }
 
     @Override
-    public void visitNodeCorpo(NodeCorpo node) {
+    public void visitNodeCorpo(NodeCorpo node) throws ContextualError {
         if(node != null) {
             if(node.getDeclaracoes() != null)
                 node.getDeclaracoes().visit(this);
@@ -79,14 +79,10 @@ public class Checker implements Visitor {
     }
 
     @Override
-    public void visitNodeDeclaracao(NodeDeclaracao node) {
+    public void visitNodeDeclaracao(NodeDeclaracao node) throws ContextualError {
         if (node != null){
             Variavel var = new Variavel(node.getName().spelling, node);
-            try {
                 this.t.enter(var);
-            } catch (ContextualError e) {
-                System.out.println("Erro de contexto! "+e.getMessage());
-            }
             if (node.getNext() != null){
                 node.getNext().visit(this);
             }
@@ -94,7 +90,7 @@ public class Checker implements Visitor {
     }
 
     @Override
-    public void visitNodeExpressao(NodeExpressao node) {
+    public void visitNodeExpressao(NodeExpressao node) throws ContextualError {
         if (node != null) {
             if (node.getOperador() != null) {
                 node.getOperador().visit(this);
@@ -107,7 +103,7 @@ public class Checker implements Visitor {
     }
 
     @Override
-    public void visitNodeExpressaoSimples(NodeExpressaoSimples node) {
+    public void visitNodeExpressaoSimples(NodeExpressaoSimples node) throws ContextualError {
        if (node != null) {
             if (node.getTermo() != null)
                 if (node.getOperador() != null) {
@@ -121,7 +117,7 @@ public class Checker implements Visitor {
     }
 
     @Override
-    public void visitNodeFator(NodeFator node) {
+    public void visitNodeFator(NodeFator node) throws ContextualError {
         if (node != null) {
             if (node.getId() != null) {
                node.getId().visit(this);
@@ -136,13 +132,9 @@ public class Checker implements Visitor {
     }
 
     @Override
-    public void visitNodeIdentificador(NodeIdentificador node) {
+    public void visitNodeIdentificador(NodeIdentificador node) throws ContextualError {
         if (node != null)
-             try {
                 t.retrieve(node.spelling);
-            } catch (ContextualError e) {
-                System.out.println("Erro de contexto! "+e.getMessage());
-            }
     }
 
     @Override
@@ -176,7 +168,7 @@ public class Checker implements Visitor {
     }
 
     @Override
-    public void visitNodePrograma(NodePrograma node) {
+    public void visitNodePrograma(NodePrograma node) throws ContextualError {
         if(node != null) {
             if(node.getCorpoDoPrograma() != null)
                 node.getCorpoDoPrograma().visit(this);
@@ -184,7 +176,7 @@ public class Checker implements Visitor {
     }
 
     @Override
-    public void visitNodeTermo(NodeTermo node) {
+    public void visitNodeTermo(NodeTermo node) throws ContextualError {
         if(node != null) {
             if(node.getOperador() != null) {
                 node.getOperador().visit(this);
@@ -207,7 +199,7 @@ public class Checker implements Visitor {
         node.getNome();
     }
     
-    public void check (NodePrograma p) {
+    public void check (NodePrograma p) throws ContextualError {
      System.out.println ("\n---> Iniciando identificacao de nomes");
      p.visit (this);
    }

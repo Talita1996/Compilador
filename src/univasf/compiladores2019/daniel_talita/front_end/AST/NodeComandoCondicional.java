@@ -1,5 +1,6 @@
 package univasf.compiladores2019.daniel_talita.front_end.AST;
 
+import univasf.compiladores2019.daniel_talita.compilation_errors.ContextualError;
 import univasf.compiladores2019.daniel_talita.visitor.Visitor;
 
 public class NodeComandoCondicional extends AbstratoComando {
@@ -25,7 +26,7 @@ public class NodeComandoCondicional extends AbstratoComando {
 	public void setComandoElse(AbstratoComando comandoElse) {
 		this.comandoElse = comandoElse;
 	}
-        public void visit (Visitor v){
+        public void visit (Visitor v) throws ContextualError{
             v.visitNodeComandoCondicional(this);
         }
 }

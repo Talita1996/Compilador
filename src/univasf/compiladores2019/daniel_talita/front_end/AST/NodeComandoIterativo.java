@@ -1,5 +1,6 @@
 package univasf.compiladores2019.daniel_talita.front_end.AST;
 
+import univasf.compiladores2019.daniel_talita.compilation_errors.ContextualError;
 import univasf.compiladores2019.daniel_talita.visitor.Visitor;
 
 public class NodeComandoIterativo extends AbstratoComando {
@@ -18,7 +19,7 @@ public class NodeComandoIterativo extends AbstratoComando {
 	public void setComando(AbstratoComando comando) {
 		this.comando = comando;
 	}
-	public void visit (Visitor v){
+	public void visit (Visitor v) throws ContextualError{
             v.visitNodeComandoIterativo(this);
         }
 }

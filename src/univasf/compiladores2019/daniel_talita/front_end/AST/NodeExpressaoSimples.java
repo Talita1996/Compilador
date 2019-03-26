@@ -1,5 +1,6 @@
 package univasf.compiladores2019.daniel_talita.front_end.AST;
 
+import univasf.compiladores2019.daniel_talita.compilation_errors.ContextualError;
 import univasf.compiladores2019.daniel_talita.visitor.Visitor;
 
 public class NodeExpressaoSimples extends AbstratoExpressao {
@@ -31,7 +32,8 @@ public class NodeExpressaoSimples extends AbstratoExpressao {
 	public void setTermosADireita(NodeExpressaoSimples termosADireita) {
 		this.termosADireita = termosADireita;
 	}
-        public void visit (Visitor v){
-            v.visitNodeExpressaoSimples(this);
-        }
+
+	public void visit(Visitor v) throws ContextualError {
+		v.visitNodeExpressaoSimples(this);
+	}
 }

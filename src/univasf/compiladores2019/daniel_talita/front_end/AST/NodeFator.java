@@ -1,5 +1,6 @@
 package univasf.compiladores2019.daniel_talita.front_end.AST;
 
+import univasf.compiladores2019.daniel_talita.compilation_errors.ContextualError;
 import univasf.compiladores2019.daniel_talita.visitor.Visitor;
 
 public class NodeFator {
@@ -26,7 +27,7 @@ public class NodeFator {
 	public void setExpressoes(NodeExpressao expressoes) {
 		this.expressoes = expressoes;
 	}
-        public void visit (Visitor v){
+        public void visit (Visitor v) throws ContextualError{
             v.visitNodeFator(this);
         }
 }

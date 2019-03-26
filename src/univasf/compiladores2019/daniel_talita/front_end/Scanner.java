@@ -95,7 +95,7 @@ public class Scanner {
 		 * Na tabela ASCII, os caracteres imprimiveis (ou seja, visiveis na tela) tem
 		 * codigo decimal entre 32 e 126
 		 */
-		return ((int) c >= 32) && (((int) c) <= 126);
+		return ((int) c >= 32) && ((int) c <= 126);
 	}
 
 	public String getCodigoFonte() {
@@ -230,7 +230,8 @@ public class Scanner {
 
 			default:
 				throw new LexicalError("O caractere \"" + currentChar + "\" (cod. ASCCI: " + (int) currentChar
-						+ ") é inválido nesta linguagem", linha, coluna);
+						+ ") pode ser utilizado apenas em coment�rios nesta linguagem.\nPara comentar uma linha utilize o simbolo \"!\"",
+						linha, coluna);
 			}
 		}
 	}

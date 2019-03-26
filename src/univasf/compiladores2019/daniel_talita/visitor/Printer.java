@@ -1,4 +1,6 @@
 package univasf.compiladores2019.daniel_talita.visitor;
+
+import univasf.compiladores2019.daniel_talita.compilation_errors.ContextualError;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoAtribuicao;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoComposto;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeComandoCondicional;
@@ -32,40 +34,41 @@ public class Printer implements Visitor {
 	}
 
 	@Override
-	public void visitNodeComandoAtribuicao(NodeComandoAtribuicao node) {
+	public void visitNodeComandoAtribuicao(NodeComandoAtribuicao node) throws ContextualError {
 		if (node != null) {
 			i++;
-                        indent();
+			indent();
 			System.out.println(":=");
 			ast.append(":=").append("\n");
-                        
-                        i++;
+
+			i++;
 			indent();
 			node.getId().visit(this);
-                        System.out.println();
-                        i--;
-                        
+			System.out.println();
+			ast.append("\n");
+			i--;
+
 			if (node.getDimensoesSeForAgregadoSimples() != null) {
 				node.getDimensoesSeForAgregadoSimples().visit(this);
 			}
 			node.getValorAtribuido().visit(this);
-                        i--;
+			i--;
 		}
 		if (node.getNext() != null) {
-                        i--;
+			i--;
 			node.getNext().visit(this);
-                }
+		}
 	}
 
 	@Override
-	public void visitNodeComandoComposto(NodeComandoComposto node) {
+	public void visitNodeComandoComposto(NodeComandoComposto node) throws ContextualError {
 		if (node != null) {
 			node.getNext().visit(this);
 		}
 	}
 
 	@Override
-	public void visitNodeComandoCondicional(NodeComandoCondicional node) {
+	public void visitNodeComandoCondicional(NodeComandoCondicional node) throws ContextualError {
 		if (node != null) {
 			node.getCondicao().visit(this);
 			node.getComandoIf().visit(this);
@@ -79,7 +82,7 @@ public class Printer implements Visitor {
 	}
 
 	@Override
-	public void visitNodeComandoIterativo(NodeComandoIterativo node) {
+	public void visitNodeComandoIterativo(NodeComandoIterativo node) throws ContextualError {
 		if (node != null) {
 			i++;
 			indent();
@@ -92,7 +95,7 @@ public class Printer implements Visitor {
 	}
 
 	@Override
-	public void visitNodeCorpo(NodeCorpo node) {
+	public void visitNodeCorpo(NodeCorpo node) throws ContextualError {
 		if (node != null) {
 			if (node.getDeclaracoes() != null) {
 				i = 0;
@@ -106,15 +109,16 @@ public class Printer implements Visitor {
 	}
 
 	@Override
-	public void visitNodeDeclaracao(NodeDeclaracao node) {
+	public void visitNodeDeclaracao(NodeDeclaracao node) throws ContextualError {
 		if (node != null) {
-                        i++;
+			i++;
 			indent();
 			node.getName().visit(this);
-                        System.out.print(":");
-                        node.getTipoDaVariavel().visit(this);
+			System.out.print(":");
+			ast.append(":");
+			node.getTipoDaVariavel().visit(this);
 			i--;
-			
+
 			if (node.getNext() != null) {
 				node.getNext().visit(this);
 			}
@@ -122,7 +126,7 @@ public class Printer implements Visitor {
 	}
 
 	@Override
-	public void visitNodeExpressao(NodeExpressao node) {
+	public void visitNodeExpressao(NodeExpressao node) throws ContextualError {
 		if (node != null) {
 			if (node.getOperador() != null) {
 				i++;
@@ -138,32 +142,32 @@ public class Printer implements Visitor {
 	}
 
 	@Override
-	public void visitNodeExpressaoSimples(NodeExpressaoSimples node) {
+	public void visitNodeExpressaoSimples(NodeExpressaoSimples node) throws ContextualError {
 		if (node != null) {
-			if (node.getTermo() != null){
+			if (node.getTermo() != null) {
 				if (node.getOperador() != null) {
 					i++;
 					indent();
 					node.getOperador().visit(this);
 				}
-                        }
+			}
 			node.getTermo().visit(this);
 			if (node.getTermosADireita() != null) {
-                                i--;
+				i--;
 				node.getTermosADireita().visit(this);
 			}
 		}
 	}
 
 	@Override
-	public void visitNodeFator(NodeFator node) {
+	public void visitNodeFator(NodeFator node) throws ContextualError {
 		if (node != null) {
 			if (node.getId() != null) {
-                                i++;
+				i++;
 				indent();
 				node.getId().visit(this);
-                                System.out.println();
-                                i--;
+				System.out.println();
+				i--;
 				if (node.getExpressoes() != null) {
 					node.getExpressoes().visit(this);
 				}
@@ -185,7 +189,7 @@ public class Printer implements Visitor {
 	public void visitNodeIdentificador(NodeIdentificador node) {
 		if (node != null) {
 			System.out.print(node.spelling);
-			ast.append(node.spelling).append("\n");
+			ast.append(node.spelling);
 		}
 	}
 
@@ -201,7 +205,7 @@ public class Printer implements Visitor {
 	public void visitNodeLiteralFloat(NodeLiteralFloat node) {
 		if (node != null) {
 			System.out.print(node.getValor());
-			ast.append(node.getValor());			
+			ast.append(node.getValor());
 		}
 	}
 
@@ -209,7 +213,7 @@ public class Printer implements Visitor {
 	public void visitNodeLiteralInteiro(NodeLiteralInteiro node) {
 		if (node != null) {
 			System.out.println(node.getValor());
-			ast.append(node.getValor()).append("\n");			
+			ast.append(node.getValor()).append("\n");
 		}
 	}
 
@@ -217,7 +221,7 @@ public class Printer implements Visitor {
 	public void visitNodeOperadorAd(NodeOperadorAd node) {
 		if (node != null) {
 			System.out.println(node.spelling);
-			ast.append(node.spelling).append("\n");			
+			ast.append(node.spelling).append("\n");
 		}
 	}
 
@@ -225,7 +229,7 @@ public class Printer implements Visitor {
 	public void visitNodeOperadorMul(NodeOperadorMul node) {
 		if (node != null) {
 			System.out.println(node.spelling);
-			ast.append(node.spelling).append("\n");			
+			ast.append(node.spelling).append("\n");
 		}
 	}
 
@@ -233,12 +237,12 @@ public class Printer implements Visitor {
 	public void visitNodeOperadorRel(NodeOperadorRel node) {
 		if (node != null) {
 			System.out.println(node.spelling);
-			ast.append(node.spelling).append("\n");			
+			ast.append(node.spelling).append("\n");
 		}
 	}
 
 	@Override
-	public void visitNodePrograma(NodePrograma node) {
+	public void visitNodePrograma(NodePrograma node) throws ContextualError {
 		if (node != null) {
 			if (node.getCorpoDoPrograma() != null)
 				node.getCorpoDoPrograma().visit(this);
@@ -246,7 +250,7 @@ public class Printer implements Visitor {
 	}
 
 	@Override
-	public void visitNodeTermo(NodeTermo node) {
+	public void visitNodeTermo(NodeTermo node) throws ContextualError {
 		if (node != null) {
 			if (node.getOperador() != null) {
 				i++;
@@ -254,9 +258,9 @@ public class Printer implements Visitor {
 				node.getOperador().visit(this);
 			}
 			node.getFator().visit(this);
-			if (node.getFatoresADireita() != null){
+			if (node.getFatoresADireita() != null) {
 				node.getFatoresADireita().visit(this);
-                        }
+			}
 		}
 	}
 
@@ -277,7 +281,7 @@ public class Printer implements Visitor {
 		}
 	}
 
-	public String print(NodePrograma p) {
+	public String print(NodePrograma p) throws ContextualError {
 		ast.append("---> Iniciando impressao da arvore").append('\n');
 		System.out.println("---> Iniciando impressao da arvore");
 		p.visit(this);

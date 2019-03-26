@@ -1,13 +1,15 @@
 package univasf.compiladores2019.daniel_talita.front_end;
+import java.util.ArrayList;
+
 import univasf.compiladores2019.daniel_talita.compilation_errors.ContextualError;
 import univasf.compiladores2019.daniel_talita.front_end.AST.NodeDeclaracao;
-import java.util.ArrayList;
 
 public class IdentificationTable {
 //Vari√°veis representando a tabela de identifica√ß√£o
     int i;
     int last = -1;
-    ArrayList<Variavel> identificador = new ArrayList();
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	ArrayList<Variavel> identificador = new ArrayList();
             
     public IdentificationTable() {
         
@@ -21,7 +23,7 @@ public class IdentificationTable {
             identificador.add(++last, var);
         }
         else {
-            throw new ContextualError("A variavel " +var.getNome()+ " est√° sendo declarada duas vezes"); //Devemos retornar a linha e a colunas aqui? Se sim. Como? Chamando Scanner?
+            throw new ContextualError("A vari·vel " +var.getNome()+ " est· sendo declarada duas vezes"); //Devemos retornar a linha e a colunas aqui? Se sim. Como? Chamando Scanner?
         }
     }
 
@@ -33,7 +35,7 @@ public class IdentificationTable {
             return identificador.get(i).getDeclaracao();
         }
         else {
-            throw new ContextualError("A variavel " +var+ " n√£o foi declarada");
+            throw new ContextualError("A vari·vel " + var + " n„o foi declarada");
         }
     }
 }

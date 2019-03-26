@@ -5,11 +5,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.JTextComponent;
 
 abstract public class InterfaceGraficaUtil {
-
 	public static String SUCESSO_ANALISE_LEXICA_MSG = "<p><font color=\"green\">Analise léxica concluida com sucesso!</font>  <resources alt=\"yes\" height=\"20\" src=\"https://jeitodigital.com.br/sistema/ckeditor/plugins/smiley/images/thumbs_up.gif\" title=\"yes\" width=\"20\" /></p>";
 	public static String FALHA_ANALISE_LEXICA_MSG = "<p><font color=\"red\">Falha na analise léxica!</font>  <resources alt=\"yes\" height=\"20\" src=\"https://jeitodigital.com.br/sistema/ckeditor/plugins/smiley/images/thumbs_down.gif\" title=\"yes\" width=\"20\" /></p>";
 	public static String SUCESSO_ANALISE_SINTATICA_MSG = "<p><font color=\"green\">Analise sintática concluida com sucesso!</font>  <resources alt=\"yes\" height=\"20\" src=\"https://jeitodigital.com.br/sistema/ckeditor/plugins/smiley/images/thumbs_up.gif\" title=\"yes\" width=\"20\" /></p>";
 	public static String FALHA_ANALISE_SINTATICA_MSG = "<p><font color=\"red\">Falha na analise sintatica!</font>  <resources alt=\"yes\" height=\"20\" src=\"../../../../img/thumbs_down.gif\" title=\"yes\" width=\"20\" /></p>";
+	public static String FALHA_ANALISE_CONTEXTO_MSG = "<p><font color=\"red\">Falha na analise de contexto!</font>  <resources alt=\"yes\" height=\"20\" src=\"https://jeitodigital.com.br/sistema/ckeditor/plugins/smiley/images/thumbs_down.gif\" title=\"yes\" width=\"20\" /></p>";
+	public static String SUCESSO_ANALISE_CONTEXTO_MSG = "<p><font color=\"green\">Analise de contexto concluida com sucesso!</font>  <resources alt=\"yes\" height=\"20\" src=\"https://jeitodigital.com.br/sistema/ckeditor/plugins/smiley/images/thumbs_up.gif\" title=\"yes\" width=\"20\" /></p>";
 
 	public static JFileChooser inicializaFileChooser() {
 

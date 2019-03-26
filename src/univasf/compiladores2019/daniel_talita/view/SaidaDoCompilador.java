@@ -4,6 +4,7 @@ public class SaidaDoCompilador {
 	
 	private String avisosDaCompilacao; 
 	private String arvoreDeSintaxeAbstrata;
+	
 	public String getAvisosDaCompilacao() {
 		return avisosDaCompilacao;
 	}

@@ -1,5 +1,6 @@
 package univasf.compiladores2019.daniel_talita.view;
 
+import univasf.compiladores2019.daniel_talita.compilation_errors.ContextualError;
 import univasf.compiladores2019.daniel_talita.compilation_errors.LexicalError;
 import univasf.compiladores2019.daniel_talita.compilation_errors.SintaxeError;
 import univasf.compiladores2019.daniel_talita.front_end.Checker;
@@ -29,14 +30,16 @@ public class Compilador {
 	public SaidaDoCompilador compilar() {
 		SaidaDoCompilador saida = new SaidaDoCompilador();
 		try {
-			
+
 			p = parser.parse();
 
 			avisosDeCompilacao.append(InterfaceGraficaUtil.SUCESSO_ANALISE_LEXICA_MSG).append("\n")
 					.append(InterfaceGraficaUtil.SUCESSO_ANALISE_SINTATICA_MSG);
-			
+
 			ast.append(printer.print(p));
 			checker.check(p);
+
+			avisosDeCompilacao.append(InterfaceGraficaUtil.SUCESSO_ANALISE_CONTEXTO_MSG);
 
 		} catch (LexicalError e) {
 			avisosDeCompilacao.append(InterfaceGraficaUtil.FALHA_ANALISE_LEXICA_MSG).append("\n\n")
@@ -46,12 +49,15 @@ public class Compilador {
 			avisosDeCompilacao.append(InterfaceGraficaUtil.FALHA_ANALISE_SINTATICA_MSG).append("\n\n")
 					.append(e.getMessage());
 			e.printStackTrace();
+		} catch (ContextualError e) {
+			avisosDeCompilacao.append(InterfaceGraficaUtil.FALHA_ANALISE_CONTEXTO_MSG).append("\n\n")
+					.append(e.getMessage());
+			e.printStackTrace();
 		}
 
-		
 		saida.setAvisosDaCompilacao(avisosDeCompilacao.toString());
 		saida.setArvoreDeSintaxeAbstrata(ast.toString());
-		
+
 		return saida;
 	}
 
