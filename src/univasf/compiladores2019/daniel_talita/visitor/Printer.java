@@ -35,14 +35,15 @@ public class Printer implements Visitor {
 	public void visitNodeComandoAtribuicao(NodeComandoAtribuicao node) {
 		if (node != null) {
 			i++;
+                        indent();
+			System.out.println(":=");
+			ast.append(":=").append("\n");
 			indent();
 			node.getId().visit(this);
+                        System.out.println();
 			if (node.getDimensoesSeForAgregadoSimples() != null) {
 				node.getDimensoesSeForAgregadoSimples().visit(this);
 			}
-			indent();
-			System.out.println(":=");
-			ast.append(":=").append("\n");
 			node.getValorAtribuido().visit(this);
 		}
 		if (node.getNext() != null)
@@ -100,16 +101,13 @@ public class Printer implements Visitor {
 	@Override
 	public void visitNodeDeclaracao(NodeDeclaracao node) {
 		if (node != null) {
-			if (node.getTipoDaVariavel() != null) {
-				i++;
-				indent();
-				node.getTipoDaVariavel().visit(this);
-				i--;
-			}
-			i++;
+                        i++;
 			indent();
 			node.getName().visit(this);
+                        System.out.print(":");
+                        node.getTipoDaVariavel().visit(this);
 			i--;
+			
 			if (node.getNext() != null) {
 				i++;
 				node.getNext().visit(this);
@@ -157,6 +155,7 @@ public class Printer implements Visitor {
                                 i++;
 				indent();
 				node.getId().visit(this);
+                                System.out.println();
                                 i--;
 				if (node.getExpressoes() != null) {
 					node.getExpressoes().visit(this);
@@ -178,7 +177,7 @@ public class Printer implements Visitor {
 	@Override
 	public void visitNodeIdentificador(NodeIdentificador node) {
 		if (node != null) {
-			System.out.println(node.spelling);
+			System.out.print(node.spelling);
 			ast.append(node.spelling).append("\n");
 		}
 	}
